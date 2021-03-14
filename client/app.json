@@ -1,0 +1,16 @@
+{
+  "name": "Scratcher",
+  "displayName": "Scratcher",
+  "expo": {
+    "name": "Scratcher",
+    "slug": "scratcher",
+    "privacy": "hidden",
+    "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    }
+  }
+}
