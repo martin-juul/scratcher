@@ -57,9 +57,12 @@ class UserController extends Controller
      *
      * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(User $user)
     {
         $user->delete();
+
+        return response(null, 204);
     }
 }
