@@ -3,8 +3,10 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import { NavigationContainerRef } from '@react-navigation/native';
-import * as storage from './src/services/storage';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import store from './src/store';
+import * as storage from './src/services/storage';
 import {
   canExit,
   RootNavigator,
@@ -31,16 +33,18 @@ export default (): React.ReactFragment => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider {...eva} theme={{...eva.dark, ...appTheme}}>
-        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <RootNavigator
-            // @ts-ignore
-            ref={navigationRef}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </SafeAreaProvider>
-      </ApplicationProvider>
+      <Provider store={store}>
+        <ApplicationProvider {...eva} theme={{...eva.dark, ...appTheme}}>
+          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            <RootNavigator
+              // @ts-ignore
+              ref={navigationRef}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </SafeAreaProvider>
+        </ApplicationProvider>
+      </Provider>
     </>
   );
 }

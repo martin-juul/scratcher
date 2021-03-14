@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootParamList } from '../../navigation';
 import { Layout, Text } from '@ui-kitten/components';
 import { Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
-import { Album, ApiService, Track } from '../../services/api';
+import { ApiService, Track } from '../../services/api';
 import { Sound } from 'expo-av/build/Audio/Sound';
 import { Audio, AVPlaybackStatus } from 'expo-av';
 import { Artwork } from '../../components/Artwork';
@@ -14,6 +14,7 @@ import { Pause, Play, SkipBack, SkipForward } from './icons';
 import { appTheme } from '../../theme';
 import { APP_URL } from '@env';
 import { Progress } from '../../components/Player';
+import { useTypedSelector } from '../../store/rootReducer';
 
 type AlbumsScreenNavigationProp = StackNavigationProp<RootParamList, 'Player'>;
 type Props = {
@@ -27,7 +28,8 @@ export function PlayerScreen({navigation, route}: Props) {
     width: 300,
   };
 
-  const [album, setAlbum] = useState<Album>();
+  const album = useTypedSelector(state => state.album);
+
   const [track, setTrack] = useState<Track>();
 
   const [error, setError] = useState<string>();
@@ -42,14 +44,28 @@ export function PlayerScreen({navigation, route}: Props) {
   const [sliderPosition, setSliderPosition] = useState(0);
   const [sliderInitiated, setSliderInitiated] = useState(false);
 
-  const [hasPrev] = useState(route.params.prevSha);
-  const [hasNext] = useState(route.params.nextSha);
+  const [prevSha, setPrevSha] = useState<string>();
+  const [nextSha, setNextSha] = useState<string>();
+
+  useEffect(() => {
+    if (album && album.loaded && track) {
+      let trackNumber = track.track_number;
+      if (trackNumber) {
+        trackNumber = Number(trackNumber);
+
+        const prev = album.data.tracks.filter(x => (Number(x.track_number) + 1) === trackNumber)[0];
+        if (prev) setPrevSha(prev.sha256);
+
+        const next = album.data.tracks.filter(x => (Number(x.track_number) - 1) === trackNumber)[0];
+        if (next) setNextSha(next.sha256);
+      }
+    }
+  }, [album, track]);
 
   useEffect(() => {
     if (route.params.albumSlug && route.params.sha) {
       const api = new ApiService();
 
-      api.album(route.params.albumSlug).then(r => setAlbum(r));
       api.track(route.params.albumSlug, route.params.sha).then(r => setTrack(r));
     }
   }, [route.params.albumSlug, route.params.sha]);
@@ -122,19 +138,14 @@ export function PlayerScreen({navigation, route}: Props) {
   }, [isPlaying]);
 
   const skip = (next: boolean) => {
-    if (next && !hasNext) {
-      return;
-    }
-
-    if (!next && !hasPrev) {
-      return;
-    }
+    if (next && !nextSha) return;
+    if (!next && !prevSha) return;
 
     navigation.navigate('Player', {
-      albumSlug: route.params.albumSlug,
-      sha: next ? route.params.nextSha as string : route.params.prevSha as string,
-      prevSha: next ? route.params.sha : undefined,
-      nextSha: next ? undefined : route.params.sha,
+      albumSlug: album.data?.slug as string,
+      sha: (next ? nextSha : prevSha) as string,
+      prevSha: prevSha,
+      nextSha: nextSha,
     });
   };
 
@@ -143,13 +154,13 @@ export function PlayerScreen({navigation, route}: Props) {
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView>
-        {track && (
+        {(album && album.loaded && track) && (
           <>
             <View style={styles.artwork}>
               {
-                (album && album.artwork)
+                (album && album.data.artwork)
                   ? (<Artwork
-                    artwork={album.artwork}
+                    artwork={album.data.artwork}
                     height={ARTWORK.height}
                     width={ARTWORK.width}
                     props={{borderRadius: 5}}
@@ -159,8 +170,8 @@ export function PlayerScreen({navigation, route}: Props) {
             </View>
 
             <View style={styles.controls}>
-              <Text style={styles.title}>{track.title}</Text>
-              <Text style={styles.artists}>{track.artists.map(x => x.name).join(', ')}</Text>
+              <Text style={styles.title} numberOfLines={1}>{track.title}</Text>
+              <Text style={styles.artists} numberOfLines={1}>{track.artists.map(x => x.name).join(', ')}</Text>
 
               <View style={styles.progressContainer}>
                 <View style={styles.progressTrack}/>
@@ -182,7 +193,7 @@ export function PlayerScreen({navigation, route}: Props) {
                 <Pressable
                   hitSlop={20}
                   onPress={() => skip(false)}
-                  disabled={!hasPrev}
+                  disabled={!prevSha}
                 >
                   <SkipBack/>
                 </Pressable>
@@ -197,7 +208,7 @@ export function PlayerScreen({navigation, route}: Props) {
                 <Pressable
                   hitSlop={20}
                   onPress={() => skip(true)}
-                  disabled={!hasNext}
+                  disabled={!nextSha}
                 >
                   <SkipForward/>
                 </Pressable>
@@ -247,7 +258,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   buttonGroup: {
-    marginTop: 36,
+    marginTop: '20%',
     paddingHorizontal: 36,
   },
 });

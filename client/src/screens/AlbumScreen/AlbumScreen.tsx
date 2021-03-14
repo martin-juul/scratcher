@@ -8,6 +8,8 @@ import { RouteProp } from '@react-navigation/native';
 import { Album, ApiService } from '../../services/api';
 import { Artwork } from '../../components/Artwork';
 import { TrackList } from '../../components/TrackList';
+import { setAlbum as storeSetAlbum } from '../../store/album';
+import { useAppDispatch } from '../../store';
 
 type AlbumsScreenNavigationProp = StackNavigationProp<AlbumsParamList, 'Album'>;
 type Props = {
@@ -17,6 +19,7 @@ type Props = {
 
 export function AlbumScreen({navigation, route}: Props) {
   const [album, setAlbum] = useState<Album>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const api = new ApiService();
@@ -27,6 +30,7 @@ export function AlbumScreen({navigation, route}: Props) {
   useEffect(() => {
     if (album) {
       navigation.setOptions({title: album.title});
+      dispatch(storeSetAlbum(album))
     }
   }, [album]);
 
