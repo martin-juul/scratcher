@@ -16,10 +16,12 @@ use Illuminate\Notifications\Notifiable;
  * @property string $password
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $role
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Playlist[] $playlists
+ * @property-read \Illuminate\Database\Eloquent\Collection<Playlist>|Playlist[] $playlists
  * @property-read int|null $playlists_count
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -29,12 +31,15 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public const ROLES = ['admin', 'user'];
 
     /**
      * The attributes that are mass assignable.
@@ -45,6 +50,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -66,8 +72,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $keyType = 'string';
+    protected $dateFormat = 'Y-m-d H:i:sO';
+
+    public function setRoleAttribute(string $role): void
+    {
+        if (!in_array($role, static::ROLES, true)) {
+            throw new \InvalidArgumentException("{$role} is not a valid role. Options are: " . implode(', ', static::ROLES));
+        }
+
+        $this->attributes['role'] = $role;
+    }
+
     public function playlists()
     {
         return $this->hasMany(Playlist::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

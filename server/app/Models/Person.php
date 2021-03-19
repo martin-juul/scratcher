@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Artwork[] $artwork
  * @property-read int|null $artwork_count
+ * @method static \Database\Factories\PersonFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Person findSimilarSlugs(string $attribute, array $config, string $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Person newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Person newQuery()

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\LibraryFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Library findSimilarSlugs(string $attribute, array $config, string $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Library newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Library newQuery()

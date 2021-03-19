@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Track[] $tracks
  * @property-read int|null $tracks_count
  * @property-read \App\Models\User $user
+ * @method static \Database\Factories\PlaylistFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist query()
