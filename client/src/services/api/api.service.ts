@@ -8,9 +8,6 @@ export class ApiService {
   constructor() {
     this.client = create({
       baseURL: APP_URL,
-      headers: {
-        'X-Client': 'Scratcher App',
-      },
     });
   }
 
