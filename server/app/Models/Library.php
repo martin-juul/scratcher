@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\AbstractModel;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Library
@@ -48,5 +46,10 @@ class Library extends AbstractModel
                 'source' => ['name'],
             ],
         ];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 /**
  * App\Models\User
  *
- * @property int $id
+ * @property string $id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -19,7 +19,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $role
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<Playlist>|Playlist[] $playlists
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Playlist[] $playlists
  * @property-read int|null $playlists_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()

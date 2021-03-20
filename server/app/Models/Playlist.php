@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $is_public
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Track[] $tracks
  * @property-read int|null $tracks_count
  * @property-read \App\Models\User $user
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist query()
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereIsPublic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Playlist whereUpdatedAt($value)
@@ -32,6 +34,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Playlist extends AbstractModel
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'is_public',
+    ];
+
+    protected $casts = [
+        'is_public' => 'bool',
+    ];
 
     public function tracks()
     {
