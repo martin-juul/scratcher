@@ -20,12 +20,12 @@ class PlaylistResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'name'      => $this->name,
-            'isPublic'  => $this->is_public,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
-            'tracks'    => $this->whenLoaded('tracks'),
-            'user'      => $this->whenLoaded('user'),
+            'name'     => $this->name,
+            'isPublic' => $this->is_public,
+            'created'  => $this->created_at,
+            'updated'  => $this->updated_at,
+            'tracks'   => $this->whenLoaded('tracks'),
+            'user'     => $this->whenLoaded('user'),
         ];
     }
 }
