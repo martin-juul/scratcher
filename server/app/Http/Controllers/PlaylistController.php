@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\{PlaylistCreateRequest, PlaylistUpdateRequest};
 use App\Http\Resources\PlaylistResource;
-use App\Models\{Playlist, User};
+use App\Models\{Playlist, Track, User};
 
 class PlaylistController extends Controller
 {
@@ -31,7 +31,13 @@ class PlaylistController extends Controller
      */
     public function store(PlaylistCreateRequest $request, User $user)
     {
-        $playlist = Playlist::create($request->validated());
+        $data = $request->validated();
+
+        $playlist = Playlist::make([
+            'name'      => $data['name'],
+            'is_public' => $data['isPublic'],
+        ]);
+        $playlist->user()->associate($user);
 
         return new PlaylistResource($playlist);
     }
@@ -45,6 +51,8 @@ class PlaylistController extends Controller
      */
     public function show(User $user, Playlist $playlist)
     {
+        $playlist->loadMissing('tracks');
+
         return new PlaylistResource($playlist);
     }
 
@@ -58,6 +66,18 @@ class PlaylistController extends Controller
      */
     public function update(PlaylistUpdateRequest $request, User $user, Playlist $playlist)
     {
+        $data = $request->validated();
+        $tracks = [];
+
+        foreach ($data['tracks'] as $track) {
+            $model = Track::whereSha256($track['sha256'])->select('id')->first();
+
+            if ($model) {
+                $tracks[] = [$model->id => ['order' => $track['order']]];
+            }
+        }
+
+        $playlist->tracks()->sync($tracks);
 
         return new PlaylistResource($playlist);
     }
@@ -71,7 +91,7 @@ class PlaylistController extends Controller
      */
     public function destroy(User $user, Playlist $playlist)
     {
-        $this->authorize();
+        $playlist->delete();
 
         return response(null, 204);
     }
