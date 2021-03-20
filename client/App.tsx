@@ -17,6 +17,9 @@ import {
 import { appTheme } from './src/theme';
 import './app.json';
 
+import { enableScreens } from 'react-native-screens';
+enableScreens();
+
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 export default (): React.ReactFragment => {
