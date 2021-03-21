@@ -27,7 +27,7 @@ export type RootParamList = {
 const RootStack = createStackNavigator<RootParamList>();
 
 const RootStackScreen = () => (
-  <RootStack.Navigator mode="modal">
+  <RootStack.Navigator mode="modal" headerMode="float">
     <RootStack.Screen name="Main" component={MainStackScreen} options={{headerShown: false}}/>
     <RootStack.Screen name="Player" component={PlayerScreen}/>
   </RootStack.Navigator>

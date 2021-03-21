@@ -34,6 +34,12 @@ export class ApiService {
     return (res.data as Response<Track>).data;
   }
 
+  async playlist(slug: string) {
+    const res = await this.client.get(`/api/playlists/${slug}`);
+
+    return (res.data as Response<Playlist>).data;
+  }
+
   async playlists(options?: Partial<CollectionRequest>) {
     options = this.collectionOptions(options);
     const res = await this.client.get('/api/playlists', {

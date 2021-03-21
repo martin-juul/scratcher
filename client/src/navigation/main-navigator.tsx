@@ -29,7 +29,7 @@ const BottomTabBar = ({navigation, state}: any) => (
 );
 
 export const MainNavigator = () => (
-  <Navigator tabBar={props => <BottomTabBar {...props} />}>
+  <Navigator lazy={false} tabBar={props => <BottomTabBar {...props} />}>
     <Screen name='Albums' component={AlbumsStackScreen}/>
   </Navigator>
 );
