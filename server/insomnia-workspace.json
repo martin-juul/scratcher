@@ -1,0 +1,320 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2020-01-01T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2021.1.1",
+  "resources": [
+    {
+      "_id": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "parentId": null,
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Scratcher",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_2f150a9084e64fe6aeea83aa0118cf67",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Libraries",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1616223787754,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_864f42d81388452b84c1a8da0de0326f",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Albums",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1616223787804,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_98695796334d43aeab634e612106d1ee",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1616308530439,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_270f541ac2a54917a9b968ab03c1d45a",
+      "parentId": "fld_98695796334d43aeab634e612106d1ee",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "https://scratcher.test/api/auth",
+      "name": "Tokens",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616310575473,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_61ee1fac05214a67924dc6e6a1e7e0a4",
+      "parentId": "fld_98695796334d43aeab634e612106d1ee",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "https://scratcher.test/api/auth",
+      "name": "Authenticate",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"client_name\": \"iOS\",\n\t\"email\": \"code@juul.xyz\",\n\t\"password\": \"secret\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_88f5eb0ca81e4e24aa7812ede43efdc4"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1616308570346,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_661ed49ee8e344c59f160ffffd135fb2",
+      "parentId": "fld_98695796334d43aeab634e612106d1ee",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "https://scratcher.test/api/auth/token/revoke-all",
+      "name": "Revoke All",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1616308570246,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6efebe2f1fc44868a3ade200db229a2f",
+      "parentId": "fld_864f42d81388452b84c1a8da0de0326f",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{ _.base_url }}/api/albums",
+      "name": "List",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1615629409666,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_bfeab3eedba84d7991755be05dfb29f1",
+      "parentId": "fld_2f150a9084e64fe6aeea83aa0118cf67",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{base_url}}/api/libraries",
+      "name": "Create",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"music\",\n\t\"path\": \"/Users/martin/music-lib\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_dd24c4fe8152493ab6e9bda87468bd51"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616224277515,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_db7c126d30bd42bdae57811f2c909180",
+      "parentId": "fld_98695796334d43aeab634e612106d1ee",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "https://scratcher.test/api/auth/token/b66b6592-b1b9-4909-acbd-0dae8aa2970e",
+      "name": "Revoke",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616308570296,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_dd33dafe995146de9f83fb8808f22609",
+      "parentId": "fld_2f150a9084e64fe6aeea83aa0118cf67",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{base_url}}/api/libraries/music/scan",
+      "name": "Scan",
+      "description": "",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616224277465,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "jar_90e986853dbc6124589f32954dca06d0db355e25",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Default Jar",
+      "cookies": [
+        {
+          "key": "XSRF-TOKEN",
+          "value": "eyJpdiI6IkFlajBtMTRzaERHUktrRzJXUEF3T3c9PSIsInZhbHVlIjoiYkRhMS82R1laSFNqYVpNOXUzWi93R1RJTlJRR0tOYmIyQ2g0QXc5WVorUFdHZHIvM2hjWUNJNDJGM0dNQ0dPM1hOSENhUW4vNUVURDlqakNKQnROSWVadnhuVDVucDVOZjVOKzFMeVd0WkVJSzYxRkhrcndVdWhUbGJKOExIZjMiLCJtYWMiOiJhNWNlZWM1ZDVjNjAzYzQwMGJiZGJiYWE5MDg4MTFhZDc4NjkwYmEwMjgwZWNmMmRjZTU4ZGNjNjFlODcyZDliIn0%3D",
+          "expires": "2021-03-21T08:41:25.000Z",
+          "maxAge": 7200,
+          "domain": "scratcher.test",
+          "path": "/",
+          "extensions": [
+            "samesite=lax"
+          ],
+          "hostOnly": true,
+          "creation": "2021-03-21T06:40:49.862Z",
+          "lastAccessed": "2021-03-21T06:41:25.567Z",
+          "id": "7096439647599095"
+        },
+        {
+          "key": "scratcher_session",
+          "value": "eyJpdiI6IkhReE5jeHdFdnczVWZEeXRiZ0ZJdWc9PSIsInZhbHVlIjoiRHdGbXhYNFo0SEt6aXZHWU9yekNxN1lqL1BXMEYwaXhicy9Cd1ZKRlJ1MEsyWnk1M0ZKNXVsUFFyT2J5M2plU2ZCMU5DNW1kQWhJdU5pQVh3RDlVc3dERXVxZldYSlRBZ1lKdjEvbFpLR2l2REhPYkF3WU1OU1g2SFJzK2Z3WEUiLCJtYWMiOiI2NDc3NDkzODg2ZmRjNmM4ZTgzMzljOWZiYTI1MjBlZjlkZTlmODFkMTU3ZmUzZjNjNGM2NjM3MTI0NGExNDVlIn0%3D",
+          "expires": "2021-03-21T08:41:25.000Z",
+          "maxAge": 7200,
+          "domain": "scratcher.test",
+          "path": "/",
+          "httpOnly": true,
+          "extensions": [
+            "samesite=lax"
+          ],
+          "hostOnly": true,
+          "creation": "2021-03-21T06:40:49.862Z",
+          "lastAccessed": "2021-03-21T06:41:25.567Z",
+          "id": "323437792297425"
+        }
+      ],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_ad05c998d11e4034973a5ac7681f3c50",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "fileName": "Scratcher",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_90e986853dbc6124589f32954dca06d0db355e25",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "https://scratcher.test",
+        "token": "935407a7-7c61-41b4-a5ff-b0eef6533432|5XUA79g9Dfh0iFWNsnP4yOERUmvxU3Qf4ZGUYaXZ"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1615629395238,
+      "_type": "environment"
+    }
+  ]
+}
