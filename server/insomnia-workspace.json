@@ -51,6 +51,53 @@
       "_type": "request_group"
     },
     {
+      "_id": "fld_e1d9e62399d04f62999fc61676ec6838",
+      "parentId": "wrk_01d8df2e968c41ec940ec75e06b9a135",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "name": "Playlists",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1616223787779,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_25522b6527f9434d8b16002beca36415",
+      "parentId": "fld_e1d9e62399d04f62999fc61676ec6838",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{base_url}}/api/playlists",
+      "name": "Create",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Sunday Night\",\n\t\"isPublic\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_db6e52ced31e4e599e79cf9e355fb7b4"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616311965387,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
       "_id": "req_270f541ac2a54917a9b968ab03c1d45a",
       "parentId": "fld_98695796334d43aeab634e612106d1ee",
       "modified": 1600000000000,
@@ -113,7 +160,7 @@
       "parentId": "fld_98695796334d43aeab634e612106d1ee",
       "modified": 1600000000000,
       "created": 1600000000000,
-      "url": "https://scratcher.test/api/auth/token/revoke-all",
+      "url": "{{base_url}}/api/auth/token/revoke-all",
       "name": "Revoke All",
       "description": "",
       "method": "DELETE",
@@ -147,7 +194,7 @@
         "type": "bearer",
         "token": "{{token}}"
       },
-      "metaSortKey": -1615629409666,
+      "metaSortKey": -1616313109085,
       "isPrivate": false,
       "settingStoreCookies": true,
       "settingSendCookies": true,
@@ -183,6 +230,32 @@
         "token": "{{token}}"
       },
       "metaSortKey": -1616224277515,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cf67121fb37f436c8838521d252f5865",
+      "parentId": "fld_864f42d81388452b84c1a8da0de0326f",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{ _.base_url }}/api/albums/avici-01-2017",
+      "name": "Show",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616313109035,
       "isPrivate": false,
       "settingStoreCookies": true,
       "settingSendCookies": true,
@@ -235,6 +308,41 @@
         "token": "{{token}}"
       },
       "metaSortKey": -1616224277465,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ef64502ca87d4a7eacea1bf6b2fec9d4",
+      "parentId": "fld_e1d9e62399d04f62999fc61676ec6838",
+      "modified": 1600000000000,
+      "created": 1600000000000,
+      "url": "{{base_url}}/api/playlists/martin-juul-sunday-night",
+      "name": "Update",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"tracks\": [\n\t\t{\n\t\t\t\"sha256\": \"d34ffe43dfad4adea8b7569447a73296bbb2143b4d94687415862a92bc3f1279\",\n\t\t\t\"sort\": 1\n\t\t}\n\t]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_18aaace659494f90984a0190850e731a"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{token}}"
+      },
+      "metaSortKey": -1616311965337,
       "isPrivate": false,
       "settingStoreCookies": true,
       "settingSendCookies": true,
