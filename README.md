@@ -19,15 +19,13 @@ This is the heart of the suite. It is tasked with providing all backend function
 ### [client](./client/README.md)
 
 Now this is where it gets more interesting. As this is where you will _hopefully_ spend most of your time.
-The client is written using React Native, supporting Android, iOS, macOS and Windows.
+The client is written using React Native, supporting Android & iOS
 
 [App Store](https://scratcher.juul.xyz/goto/appstore)
 
 [Google Play Store](https://scratcher.juul.xyz/goto/playstore)
 
-[Mac App Store (MAS)](https://scratcher.juul.xyz/goto/mas)
-
-## [License](./LICENSE.md)
+## [License](./LICENSE)
 
 This project is licensed under the terms of Apache-2.0
 
