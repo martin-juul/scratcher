@@ -21,11 +21,12 @@ class PlaylistResource extends JsonResource
     {
         return [
             'name'     => $this->name,
+            'slug'     => $this->slug,
             'isPublic' => $this->is_public,
             'created'  => $this->created_at,
             'updated'  => $this->updated_at,
-            'tracks'   => $this->whenLoaded('tracks'),
-            'user'     => $this->whenLoaded('user'),
+            'tracks'   => TrackResource::collection($this->whenLoaded('tracks')),
+            'user'     => UserResource::make($this->whenLoaded('user')),
         ];
     }
 }

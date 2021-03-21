@@ -18,15 +18,15 @@ Route::group(['prefix' => 'auth', 'middleware' => 'respond.json'], function () {
 });
 
 Route::apiResources([
-    'albums'         => \App\Http\Controllers\AlbumController::class,
-    'albums.tracks'  => \App\Http\Controllers\TrackController::class,
-    'libraries'      => \App\Http\Controllers\LibraryController::class,
-    'users'          => \App\Http\Controllers\UserController::class,
-    'users.playlist' => \App\Http\Controllers\PlaylistController::class,
-], ['middleware' => 'auth:sanctum,respond.json']);
+    'albums'        => \App\Http\Controllers\AlbumController::class,
+    'albums.tracks' => \App\Http\Controllers\TrackController::class,
+    'libraries'     => \App\Http\Controllers\LibraryController::class,
+    'users'         => \App\Http\Controllers\UserController::class,
+    'playlists'     => \App\Http\Controllers\PlaylistController::class,
+], ['middleware' => ['auth:sanctum','respond.json']]);
 
 Route::post('/libraries/{library}/scan', \App\Http\Controllers\LibraryController::class . '@scan')
-    ->middleware(['auth:sanctum', 'respond.json'])
+    ->middleware(['auth:sanctum','respond.json'])
     ->name('libraries.scan');
 
 Route::get('/stream/{track}', \App\Http\Controllers\StreamController::class . '@file')

@@ -5,19 +5,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\{PlaylistCreateRequest, PlaylistUpdateRequest};
 use App\Http\Resources\PlaylistResource;
-use App\Models\{Playlist, Track, User};
+use App\Models\{Playlist, Track};
+use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param User $user
+     * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(User $user)
+    public function index(Request $request)
     {
-        $playlists = $user->playlists()->latest()->paginate();
+        $playlists = $request->user()->playlists()->latest()->paginate();
 
         return PlaylistResource::collection($playlists);
     }
@@ -26,10 +27,10 @@ class PlaylistController extends Controller
      * Store a newly created resource in storage.
      *
      * @param PlaylistCreateRequest $request
-     * @param User $user
      * @return PlaylistResource
+     * @throws \Throwable
      */
-    public function store(PlaylistCreateRequest $request, User $user)
+    public function store(PlaylistCreateRequest $request)
     {
         $data = $request->validated();
 
@@ -37,7 +38,8 @@ class PlaylistController extends Controller
             'name'      => $data['name'],
             'is_public' => $data['isPublic'],
         ]);
-        $playlist->user()->associate($user);
+        $playlist->user()->associate($request->user());
+        $playlist->saveOrFail();
 
         return new PlaylistResource($playlist);
     }
@@ -45,11 +47,10 @@ class PlaylistController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $user
      * @param Playlist $playlist
      * @return PlaylistResource
      */
-    public function show(User $user, Playlist $playlist)
+    public function show(Playlist $playlist)
     {
         $playlist->loadMissing('tracks');
 
@@ -60,11 +61,10 @@ class PlaylistController extends Controller
      * Update the specified resource in storage.
      *
      * @param PlaylistUpdateRequest $request
-     * @param User $user
      * @param Playlist $playlist
      * @return PlaylistResource
      */
-    public function update(PlaylistUpdateRequest $request, User $user, Playlist $playlist)
+    public function update(PlaylistUpdateRequest $request, Playlist $playlist)
     {
         $data = $request->validated();
         $tracks = [];
@@ -73,7 +73,7 @@ class PlaylistController extends Controller
             $model = Track::whereSha256($track['sha256'])->select('id')->first();
 
             if ($model) {
-                $tracks[] = [$model->id => ['order' => $track['order']]];
+                $tracks[$model->id] = ['sort' => $track['sort']];
             }
         }
 
@@ -85,11 +85,11 @@ class PlaylistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
      * @param Playlist $playlist
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy(User $user, Playlist $playlist)
+    public function destroy(Playlist $playlist)
     {
         $playlist->delete();
 
