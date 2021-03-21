@@ -79,6 +79,8 @@ class PlaylistController extends Controller
 
         $playlist->tracks()->sync($tracks);
 
+        $playlist->loadMissing('tracks');
+
         return new PlaylistResource($playlist);
     }
 
