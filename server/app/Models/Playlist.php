@@ -63,7 +63,7 @@ class Playlist extends AbstractModel
     public function tracks()
     {
         return $this->belongsToMany(Track::class, 'track_playlist')
-            ->withPivot(['order'])
+            ->withPivot(['sort'])
             ->withTimestamps();
     }
 
