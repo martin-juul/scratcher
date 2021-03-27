@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry, Text } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import { NavigationContainerRef } from '@react-navigation/native';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
+import { useInitFonts } from './src/assets/fonts/use-init-fonts';
 import store from './src/store';
 import * as storage from './src/services/storage';
 import {
@@ -23,6 +24,16 @@ enableScreens();
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 export default (): React.ReactFragment => {
+  const [loadedFonts] = useInitFonts();
+
+  if (!loadedFonts) {
+    return (
+      <>
+        <Text>Loading..</Text>
+      </>
+    );
+  }
+
   const navigationRef = useRef<NavigationContainerRef>();
   // @ts-ignore
   setRootNavigation(navigationRef);
