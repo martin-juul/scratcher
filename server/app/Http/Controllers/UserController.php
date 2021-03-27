@@ -43,6 +43,7 @@ class UserController extends Controller
             return response()->json(['error' => 'user_already_exists'], 400);
         }
 
+        $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
 
         return new UserResource($user);
