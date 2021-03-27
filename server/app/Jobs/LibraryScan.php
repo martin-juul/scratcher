@@ -43,10 +43,10 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
 
             $id3 = $scanner->parseId3($file);
 
-            $albumName = Arr::first(Arr::get($id3, 'tags.id3v2.album')) ?: $file->directory;
+            $albumName = Arr::first(Arr::get($id3, 'tags.id3v2.album')) ?: $file->album;
             $album = Album::whereTitle($albumName)->first();
             if (!$album) {
-                $album = $this->createAlbum($albumName, $id3);
+                $album = $this->createAlbum($albumName, $id3, $file);
             }
 
             $track = $this->makeTrack($id3, $file);
@@ -107,13 +107,13 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
-    private function createAlbum(mixed $albumName, array $id3): Album
+    private function createAlbum(mixed $albumName, array $id3, FileResult $file): Album
     {
         $album = Album::make(['title' => $albumName, 'year' => Arr::first(Arr::get($id3, 'tags.id3v2.year'))]);
         $album->library()->associate($this->library);
         $album->save();
 
-        $artist = Person::firstOrCreate(['name' => Arr::first(Arr::get($id3, 'tags.id3v2.band'))]);
+        $artist = Person::firstOrCreate(['name' => Arr::first(Arr::get($id3, 'tags.id3v2.band'))] ?? $file->artist);
         $album->artist()->attach($artist->id, ['role' => 'artist']);
 
         return $album;
@@ -134,7 +134,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
     private function makeTrack(array $id3, FileResult $file): Track
     {
         return Track::make([
-            'title'        => Arr::first(Arr::get($id3, 'tags.id3v2.title')) ?? $file->basename,
+            'title'        => Arr::first(Arr::get($id3, 'tags.id3v2.title')) ?? $file->trackName,
             'sha256'       => $file->sha256,
             'path'         => $file->path,
             'file_format'  => Arr::get($id3, 'fileformat'),
@@ -143,7 +143,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
             'isrc'         => Arr::first(Arr::get($id3, 'tags.id3v2.isrc')),
             'bitrate'      => (int)Arr::get($id3, 'bitrate'),
             'length'       => (int)Arr::get($id3, 'playtime_seconds'),
-            'track_number' => Arr::first(Arr::get($id3, 'tags.id3v2.track_number')),
+            'track_number' => Arr::first(Arr::get($id3, 'tags.id3v2.track_number')) ?? $file->trackNo,
         ]);
     }
 }
