@@ -11,6 +11,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AlbumController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Album::class, 'album');
+    }
+
     /**
      * Display a listing of the resource.
      *

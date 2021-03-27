@@ -12,6 +12,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TrackController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Track::class, 'track');
+    }
+
     /**
      * Display a listing of the resource.
      *

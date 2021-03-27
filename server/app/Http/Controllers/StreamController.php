@@ -10,6 +10,10 @@ class StreamController extends Controller
 {
     public function file(Request $request, Track $track)
     {
+        if (!$request->user()) {
+            abort(401);
+        }
+
         if (!file_exists($track->path)) {
             return response()->json(['error' => 'file_not_found'], 500);
         }

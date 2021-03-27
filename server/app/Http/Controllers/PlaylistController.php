@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Playlist::class, 'playlist');
+    }
+
     /**
      * Display a listing of the resource.
      *

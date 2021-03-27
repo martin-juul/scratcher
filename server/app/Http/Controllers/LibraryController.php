@@ -10,6 +10,11 @@ use App\Models\Library;
 
 class LibraryController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Library::class, 'library');
+    }
+
     /**
      * Display a listing of the resource.
      *
