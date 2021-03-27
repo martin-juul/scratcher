@@ -7,7 +7,7 @@ updates:
       day: sunday
     reviewers:
       - martin-juul
-  - package-ecosystem: yarn
+  - package-ecosystem: npm
     directory: /client
     schedule:
       interval: weekly
