@@ -19,11 +19,11 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "node onPostInstall.js"
+    "postinstall": "patch-package && node onPostInstall.js"
   },
   "dependencies": {
     "@eva-design/eva": "2.0.0",
-    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
@@ -34,6 +34,7 @@
     "@ui-kitten/eva-icons": "5.0.0",
     "apisauce": "^2.0.1",
     "expo-av": "^9.0.0",
+    "expo-font": "^9.0.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-dotenv": "^2.5.3",
@@ -62,6 +63,7 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.59.0",
+    "patch-package": "^6.4.7",
     "prettier": "^2.0.2",
     "react-test-renderer": "16.13.1",
     "typescript": "^3.8.3"
