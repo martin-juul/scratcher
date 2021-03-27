@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\{PersonalAccessToken, Playlist};
-use App\Policies\PlaylistPolicy;
+use App\Models\{PersonalAccessToken, Playlist, User};
+use App\Policies\{PlaylistPolicy, UserPolicy};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Playlist::class => PlaylistPolicy::class,
+        User::class     => UserPolicy::class,
     ];
 
     /**
