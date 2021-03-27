@@ -4,13 +4,16 @@ import { DarkTheme, NavigationContainer, NavigationContainerRef, Theme } from '@
 import { MainNavigator } from './main-navigator';
 import { AlbumScreen } from '../screens/AlbumScreen/AlbumScreen';
 import { PlayerScreen } from '../screens/PlayerScreen/PlayerScreen';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { LoginScreen } from '../screens/LoginScreen/LoginScreen';
 
 export type MainStackParamList = {
   MainStack: undefined
   Album: { slug: string }
 }
 
-const MainStack = createStackNavigator();
+const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainStackScreen = () => (
   <MainStack.Navigator>
@@ -22,16 +25,29 @@ const MainStackScreen = () => (
 export type RootParamList = {
   Main: undefined
   Player: { albumSlug: string, sha: string, nextSha: string | undefined, prevSha: string | undefined }
+  Login: undefined
 }
 
 const RootStack = createStackNavigator<RootParamList>();
 
-const RootStackScreen = () => (
-  <RootStack.Navigator mode="modal" headerMode="float">
-    <RootStack.Screen name="Main" component={MainStackScreen} options={{headerShown: false}}/>
-    <RootStack.Screen name="Player" component={PlayerScreen}/>
-  </RootStack.Navigator>
-);
+const RootStackScreen = () => {
+  const auth = useContext(AuthContext);
+
+  return (
+    <RootStack.Navigator mode="modal" headerMode="float">
+      {auth.isSignedIn ? (
+        <>
+          <RootStack.Screen name="Main" component={MainStackScreen} options={{headerShown: false}}/>
+          <RootStack.Screen name="Player" component={PlayerScreen}/>
+        </>
+      ) : (
+        <>
+          <RootStack.Screen name="Login" component={LoginScreen}/>
+        </>
+      )}
+    </RootStack.Navigator>
+  );
+};
 
 const AppTheme: Theme = {
   ...DarkTheme,

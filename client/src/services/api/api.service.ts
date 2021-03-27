@@ -1,5 +1,14 @@
 import { ApisauceInstance, create } from 'apisauce';
-import { Album, AlbumCollectionResponse, Collection, CollectionRequest, Playlist, Response, Track } from './types';
+import {
+  Album,
+  AlbumCollectionResponse,
+  AuthToken,
+  Collection,
+  CollectionRequest,
+  Playlist,
+  Response,
+  Track,
+} from './types';
 import { APP_URL } from '@env';
 
 export class ApiService {
@@ -9,6 +18,12 @@ export class ApiService {
     this.client = create({
       baseURL: APP_URL,
     });
+  }
+
+  async authenticate(email: string, password: string) {
+    const res = await this.client.post<AuthToken>(`/api/auth`, {client_name: 'Scratcher App iOS', email, password});
+
+    return res.data;
   }
 
   async albums(options?: Partial<CollectionRequest>): Promise<AlbumCollectionResponse> {
@@ -53,6 +68,10 @@ export class ApiService {
     const res = await this.client.post('/api/playlists', {name, isPublic});
 
     return res.data;
+  }
+
+  setToken(token: string) {
+    this.client.setHeader('authorization', `Bearer ${token}`);
   }
 
   private collectionOptions(options?: Partial<CollectionRequest>): CollectionRequest {

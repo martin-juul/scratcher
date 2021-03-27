@@ -15,6 +15,7 @@ import { appTheme } from '../../theme';
 import { APP_URL } from '@env';
 import { Progress } from '../../components/Player';
 import { useTypedSelector } from '../../store/rootReducer';
+import { useApi } from '../../services/api/use-api';
 
 type AlbumsScreenNavigationProp = StackNavigationProp<RootParamList, 'Player'>;
 type Props = {
@@ -28,6 +29,7 @@ export function PlayerScreen({navigation, route}: Props) {
     width: 300,
   };
 
+  const api = useApi();
   const album = useTypedSelector(state => state.album);
 
   const [track, setTrack] = useState<Track>();
@@ -64,11 +66,9 @@ export function PlayerScreen({navigation, route}: Props) {
 
   useEffect(() => {
     if (route.params.albumSlug && route.params.sha) {
-      const api = new ApiService();
-
       api.track(route.params.albumSlug, route.params.sha).then(r => setTrack(r));
     }
-  }, [route.params.albumSlug, route.params.sha]);
+  }, [route.params.albumSlug, route.params.sha, api]);
 
   React.useEffect(() => {
     Audio.setAudioModeAsync({

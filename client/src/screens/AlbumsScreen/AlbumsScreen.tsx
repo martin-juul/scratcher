@@ -2,10 +2,11 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Card, Layout, List, Text } from '@ui-kitten/components';
 import { ListRenderItemInfo, Pressable, SafeAreaView, StyleSheet, TextStyle, View } from 'react-native';
-import { Album, ApiService } from '../../services/api';
+import { Album } from '../../services/api';
 import { Artwork } from '../../components/Artwork';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { AlbumsParamList } from '../../navigation/albums-navigator';
+import { useApi } from '../../services/api/use-api';
 
 type AlbumsScreenNavigationProp = BottomTabNavigationProp<AlbumsParamList, 'Albums'>;
 type Props = {
@@ -13,13 +14,12 @@ type Props = {
 }
 
 export function AlbumsScreen({navigation}: Props) {
-
+  const api = useApi()
   const [albums, setAlbums] = useState<Omit<Album, 'tracks'>[]>([]);
 
   useEffect(() => {
-    const api = new ApiService();
     api.albums().then(r => setAlbums(r.data));
-  }, []);
+  }, [api]);
 
 
   const renderItem = ({item}: ListRenderItemInfo<Omit<Album, 'tracks'>>) => (

@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Card, Layout, List, Text } from '@ui-kitten/components';
 import { ListRenderItemInfo, Pressable, SafeAreaView, StyleSheet, TextStyle, View } from 'react-native';
-import { ApiService, Playlist } from '../../services/api';
+import { Playlist } from '../../services/api';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { PlaylistsParamList } from '../../navigation/playlists-navigator';
+import { useApi } from '../../services/api/use-api';
 
 type PlaylistsScreenNavigationProp = BottomTabNavigationProp<PlaylistsParamList, 'Playlists'>;
 type Props = {
@@ -12,13 +13,12 @@ type Props = {
 }
 
 export function PlaylistsScreen({navigation}: Props) {
-
+  const api = useApi();
   const [playlists, setPlaylists] = useState<Omit<Playlist, 'tracks'>[]>([]);
 
   useEffect(() => {
-    const api = new ApiService();
     api.playlists().then(r => setPlaylists(r.data));
-  }, []);
+  }, [api]);
 
 
   const renderItem = ({item}: ListRenderItemInfo<Omit<Playlist, 'tracks'>>) => (

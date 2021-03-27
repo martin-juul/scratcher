@@ -3,9 +3,11 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
 import { AlbumsStackScreen } from './albums-navigator';
+import { PlaylistsStackScreen } from './playlists-navigator';
 
 export type PrimaryParamList = {
   Albums: undefined;
+  Playlists: undefined;
 }
 
 const {Navigator, Screen} = createBottomTabNavigator<PrimaryParamList>();
@@ -31,8 +33,9 @@ const BottomTabBar = ({navigation, state}: any) => (
 export const MainNavigator = () => (
   <Navigator lazy={false} tabBar={props => <BottomTabBar {...props} />}>
     <Screen name='Albums' component={AlbumsStackScreen}/>
+    <Screen name='Playlists' component={PlaylistsStackScreen}/>
   </Navigator>
 );
 
-const exitRoutes = ['Albums'];
+const exitRoutes = ['Albums', 'Playlists'];
 export const canExit = (routeName: string) => exitRoutes.includes(routeName);

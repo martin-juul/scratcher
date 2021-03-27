@@ -4,9 +4,10 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { ApiService, Playlist } from '../../services/api';
+import { Playlist } from '../../services/api';
 import { useAppDispatch } from '../../store';
 import { PlaylistsParamList } from '../../navigation/playlists-navigator';
+import { useApi } from '../../services/api/use-api';
 
 type PlaylistScreenNavigationProp = StackNavigationProp<PlaylistsParamList, 'Playlist'>;
 type Props = {
@@ -16,13 +17,12 @@ type Props = {
 
 export function PlaylistScreen({navigation, route}: Props) {
   const [playlist, setPlaylist] = useState<Playlist>();
+  const api = useApi();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const api = new ApiService();
-
     api.playlist(route.params.slug).then(r => setPlaylist(r));
-  }, [route.params.slug]);
+  }, [route.params.slug, api]);
 
   useEffect(() => {
     if (playlist) {

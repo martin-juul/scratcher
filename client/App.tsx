@@ -19,20 +19,13 @@ import { appTheme } from './src/theme';
 import './app.json';
 
 import { enableScreens } from 'react-native-screens';
+import { AuthContextProvider } from './src/contexts/AuthContext';
 enableScreens();
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 export default (): React.ReactFragment => {
   const [loadedFonts] = useInitFonts();
-
-  if (!loadedFonts) {
-    return (
-      <>
-        <Text>Loading..</Text>
-      </>
-    );
-  }
 
   const navigationRef = useRef<NavigationContainerRef>();
   // @ts-ignore
@@ -50,12 +43,14 @@ export default (): React.ReactFragment => {
       <Provider store={store}>
         <ApplicationProvider {...eva} theme={{...eva.dark, ...appTheme}}>
           <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-            <RootNavigator
-              // @ts-ignore
-              ref={navigationRef}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
+            <AuthContextProvider>
+              <RootNavigator
+                // @ts-ignore
+                ref={navigationRef}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </AuthContextProvider>
           </SafeAreaProvider>
         </ApplicationProvider>
       </Provider>

@@ -7,3 +7,7 @@ export interface User {
 export interface Me extends User {
   email: string;
 }
+
+export interface AuthToken {
+  token: string;
+}

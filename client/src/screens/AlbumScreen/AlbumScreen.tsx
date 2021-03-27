@@ -10,6 +10,7 @@ import { Artwork } from '../../components/Artwork';
 import { TrackList } from '../../components/TrackList';
 import { setAlbum as storeSetAlbum } from '../../store/album';
 import { useAppDispatch } from '../../store';
+import { useApi } from '../../services/api/use-api';
 
 type AlbumsScreenNavigationProp = StackNavigationProp<AlbumsParamList, 'Album'>;
 type Props = {
@@ -19,13 +20,12 @@ type Props = {
 
 export function AlbumScreen({navigation, route}: Props) {
   const [album, setAlbum] = useState<Album>();
+  const api = useApi()
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const api = new ApiService();
-
     api.album(route.params.slug).then(r => setAlbum(r));
-  }, [route.params.slug]);
+  }, [route.params.slug, api]);
 
   useEffect(() => {
     if (album) {
