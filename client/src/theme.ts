@@ -1,4 +1,4 @@
-import { dark } from '@eva-design/eva';
+import { dark } from '@eva-design/eva'
 
 export const appTheme = {
   ...dark,
@@ -88,4 +88,4 @@ export const appTheme = {
   'color-danger-transparent-400': 'rgba(201, 47, 30, 0.32)',
   'color-danger-transparent-500': 'rgba(201, 47, 30, 0.4)',
   'color-danger-transparent-600': 'rgba(201, 47, 30, 0.48)',
-};
+}

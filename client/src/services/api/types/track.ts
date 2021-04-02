@@ -1,5 +1,5 @@
-import { Genre } from './genre';
-import { Artist } from './person';
+import { Genre } from './genre'
+import { Artist } from './person'
 
 export interface Track {
   title: string;

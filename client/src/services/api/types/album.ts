@@ -1,7 +1,7 @@
-import { Collection } from './response';
-import { Artwork } from './artwork';
-import { Artist } from './person';
-import { Track } from './track';
+import { Collection } from './response'
+import { Artwork } from './artwork'
+import { Artist } from './person'
+import { Track } from './track'
 
 export interface Album {
   title: string;

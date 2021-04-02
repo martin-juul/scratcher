@@ -1,5 +1,5 @@
-import { Album } from '../../services/api';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Album } from '../../services/api'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type AlbumLoadedState = {
   loaded: true;
@@ -13,11 +13,11 @@ const album = createSlice({
   initialState: {loaded: false} as AlbumState,
   reducers: {
     setAlbum(state, action: PayloadAction<Album>) {
-      (state as AlbumLoadedState).data = action.payload;
-      state.loaded = true;
+      (state as AlbumLoadedState).data = action.payload
+      state.loaded = true
     },
   },
-});
+})
 
-export const {setAlbum} = album.actions;
-export default album.reducer;
+export const {setAlbum} = album.actions
+export default album.reducer

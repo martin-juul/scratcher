@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Track } from '../../services/api';
-import { ListRenderItemInfo, StyleSheet, View } from 'react-native';
-import { List, ListItem, Text } from '@ui-kitten/components';
-import { humanize } from '../../formatting/duration';
-import { appTheme } from '../../theme';
-import { useNavigation } from '@react-navigation/native';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { Track } from '../../services/api'
+import { ListRenderItemInfo, StyleSheet, View } from 'react-native'
+import { List, ListItem, Text } from '@ui-kitten/components'
+import { humanize } from '../../formatting/duration'
+import { appTheme } from '../../theme'
+import { useNavigation } from '@react-navigation/native'
 
 export interface TrackListProps {
   albumSlug: string;
@@ -18,22 +18,22 @@ interface TrackItem extends Track {
 }
 
 export function TrackList({albumSlug, tracks}: TrackListProps) {
-  const navigation = useNavigation();
-  const [list, setList] = useState<TrackItem[]>();
+  const navigation = useNavigation()
+  const [list, setList] = useState<TrackItem[]>()
 
   useEffect(() => {
-    const items: TrackItem[] = [];
+    const items: TrackItem[] = []
 
     for (let i = 0; i < tracks.length; i++) {
       items.push({
         ...tracks[i],
         nextSha: i < (tracks.length - 1) ? tracks[i + 1].sha256 : undefined,
         prevSha: i > 0 && i < tracks.length ? tracks[i - 1].sha256 : undefined,
-      });
+      })
     }
 
-    setList(items);
-  }, [tracks]);
+    setList(items)
+  }, [tracks])
 
   const renderItem = ({item}: ListRenderItemInfo<TrackItem>) => (
     <ListItem onPress={() => navigation.navigate('Player', {
@@ -55,7 +55,7 @@ export function TrackList({albumSlug, tracks}: TrackListProps) {
         </View>
       </View>
     </ListItem>
-  );
+  )
 
   return (
     <>
@@ -66,7 +66,7 @@ export function TrackList({albumSlug, tracks}: TrackListProps) {
         />
       )}
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: appTheme['color-basic-400'],
   },
-});
+})

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { Animated, PanResponder, View } from 'react-native';
+import * as React from 'react'
+import { useState } from 'react'
+import { Animated, PanResponder, View } from 'react-native'
 
 export interface ProgressProps {
   position: number;
@@ -10,7 +10,7 @@ export interface ProgressProps {
 }
 
 export function Progress({position, progressPercentage, onSlide, onSlideEnd}: ProgressProps) {
-  const [isSliding, setIsSliding] = useState(false);
+  const [isSliding, setIsSliding] = useState(false)
 
   const panResponder = React.useRef(
     PanResponder.create({
@@ -23,24 +23,24 @@ export function Progress({position, progressPercentage, onSlide, onSlideEnd}: Pr
         // The gesture has started. Show visual feedback so the user knows
         // what is happening!
         // gestureState.d{x,y} will be set to zero now
-        console.log('onPanResponderGrant', gestureState);
-        setIsSliding(true);
-        onSlide();
+        console.log('onPanResponderGrant', gestureState)
+        setIsSliding(true)
+        onSlide()
       },
       onPanResponderTerminationRequest: () => true,
       onPanResponderRelease: (evt, gestureState) => {
         // The user has released all touches while this view is the
         // responder. This typically means a gesture has succeeded
-        console.log('onPanResponderRelease', gestureState);
-        setIsSliding(false);
-        onSlideEnd();
+        console.log('onPanResponderRelease', gestureState)
+        setIsSliding(false)
+        onSlideEnd()
       },
       onPanResponderTerminate: () => {
-        setIsSliding(false);
-        onSlideEnd();
+        setIsSliding(false)
+        onSlideEnd()
       },
     }),
-  ).current;
+  ).current
 
   return (
     <>
@@ -70,5 +70,5 @@ export function Progress({position, progressPercentage, onSlide, onSlideEnd}: Pr
         }}/>
       </Animated.View>
     </>
-  );
+  )
 }

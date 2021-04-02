@@ -1,4 +1,4 @@
-import { useFonts } from 'expo-font';
+import { useFonts } from 'expo-font'
 
 export function useInitFonts() {
   return useFonts({
@@ -13,5 +13,5 @@ export function useInitFonts() {
     'OpenSans-LightItalic': require('./OpenSans-LightItalic.ttf'),
     'OpenSans-SemiBold': require('./OpenSans-SemiBold.ttf'),
     'OpenSans-SemiBoldItalic': require('./OpenSans-SemiBoldItalic.ttf'),
-  });
+  })
 }

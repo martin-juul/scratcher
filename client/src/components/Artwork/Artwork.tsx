@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Artwork as ArtworkType } from '../../services/api';
-import { Image, ImageProps } from 'react-native';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { Artwork as ArtworkType } from '../../services/api'
+import { Image, ImageProps } from 'react-native'
 
 export interface ArtworkProps {
   artwork: ArtworkType;
@@ -11,33 +11,33 @@ export interface ArtworkProps {
 }
 
 export function Artwork({artwork, height, width, props}: ArtworkProps) {
-  const [dimensions, setDimensions] = useState<{ height: number, width: number }>();
+  const [dimensions, setDimensions] = useState<{ height: number, width: number }>()
 
   useEffect(() => {
-    const srcHeight = artwork.height;
-    const srcWidth = artwork.width;
+    const srcHeight = artwork.height
+    const srcWidth = artwork.width
 
-    let targetHeight = height;
-    let targetWidth = width;
+    let targetHeight = height
+    let targetWidth = width
 
-    let aspectRatio = targetWidth / targetHeight;
+    let aspectRatio = targetWidth / targetHeight
 
     if (targetWidth > srcWidth) {
-      targetWidth = srcWidth;
-      targetHeight = targetWidth / aspectRatio;
+      targetWidth = srcWidth
+      targetHeight = targetWidth / aspectRatio
     }
 
     if (targetHeight > srcHeight) {
-      aspectRatio = targetWidth / targetHeight;
-      targetHeight = srcHeight;
-      targetWidth = targetHeight * aspectRatio;
+      aspectRatio = targetWidth / targetHeight
+      targetHeight = srcHeight
+      targetWidth = targetHeight * aspectRatio
     }
 
     setDimensions({
       height: targetHeight,
       width: targetWidth,
-    });
-  }, [artwork, height, width]);
+    })
+  }, [artwork, height, width])
 
   return (
     <>
@@ -52,5 +52,5 @@ export function Artwork({artwork, height, width, props}: ArtworkProps) {
           }}/>
       )}
     </>
-  );
+  )
 }

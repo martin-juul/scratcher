@@ -1,2 +1,2 @@
-export * from './async-storage';
-export * from './storage';
+export * from './async-storage'
+export * from './storage'
