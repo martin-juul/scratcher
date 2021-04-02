@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useContext, useEffect, useState } from 'react'
-import { Card, Layout, List, Text } from '@ui-kitten/components'
-import { ListRenderItemInfo, Pressable, SafeAreaView, StyleSheet, TextStyle, View } from 'react-native'
+import { Button, Card, Layout, List, Text } from '@ui-kitten/components'
+import { ListRenderItemInfo, Pressable, StyleSheet, TextStyle, View } from 'react-native'
 import { Playlist } from '../../services/api'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { PlaylistsParamList } from '../../navigation/playlists-navigator'
@@ -13,13 +13,12 @@ type Props = {
 }
 
 export function PlaylistsScreen({navigation}: Props) {
-  const { api } = useContext(AuthContext)
+  const {api} = useContext(AuthContext)
   const [playlists, setPlaylists] = useState<Omit<Playlist, 'tracks'>[]>([])
 
   useEffect(() => {
     api.playlists().then(r => setPlaylists(r.data))
   }, [api])
-
 
   const renderItem = ({item}: ListRenderItemInfo<Omit<Playlist, 'tracks'>>) => (
     <Card
@@ -39,6 +38,11 @@ export function PlaylistsScreen({navigation}: Props) {
       >
         <View style={styles.info}>
           <Text numberOfLines={1} style={styles.title}>{item.name}</Text>
+          <Text style={styles.tracksCount}>
+            <>
+              {item.trackCount} Songs
+            </>
+          </Text>
         </View>
       </Pressable>
     </Card>
@@ -46,14 +50,19 @@ export function PlaylistsScreen({navigation}: Props) {
 
   return (
     <Layout style={styles.container}>
-      <SafeAreaView>
-        <List
-          contentContainerStyle={styles.contentContainer}
-          data={playlists}
-          renderItem={renderItem}
-          numColumns={1}
-        />
-      </SafeAreaView>
+      <View style={styles.header}>
+        <Button
+          style={styles.createPlaylistButton}
+          status="basic"
+        >Create playlist</Button>
+      </View>
+
+      <List
+        contentContainerStyle={styles.contentContainer}
+        data={playlists}
+        renderItem={renderItem}
+        numColumns={1}
+      />
     </Layout>
   )
 }
@@ -61,19 +70,27 @@ export function PlaylistsScreen({navigation}: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
   },
   contentContainer: {
     padding: 0,
+    margin: 0,
     justifyContent: 'space-between',
+  },
+  header: {
+    alignItems: 'center',
+    padding: 15,
+  },
+  createPlaylistButton: {
+    borderRadius: 150,
+    height: 50,
+    width: '60%',
   },
   item: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
-    alignItems: 'center',
-    width: '50%',
   },
   info: {
+    flexDirection: 'column',
     marginTop: 10,
   },
   artist: {
@@ -83,8 +100,14 @@ const styles = StyleSheet.create({
   } as TextStyle,
   title: {
     color: '#fff',
-    fontWeight: '500',
+    fontWeight: '600',
     marginTop: 2.5,
-    fontSize: 12,
+    fontSize: 16,
   } as TextStyle,
+  tracksCount: {
+    color: '#ccc',
+    fontWeight: '500',
+    fontSize: 14,
+    marginTop: 2.5,
+  },
 })

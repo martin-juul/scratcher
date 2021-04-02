@@ -1,6 +1,6 @@
-package com.scratcher;
+package xyz.juul.scratcher;
 
-import com.scratcher.generated.BasePackageList;
+import xyz.juul.scratcher.generated.BasePackageList;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,41 +1,41 @@
-import React, { useRef } from 'react';
-import { ApplicationProvider, IconRegistry, Text } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import * as eva from '@eva-design/eva';
-import { NavigationContainerRef } from '@react-navigation/native';
-import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
-import { Provider } from 'react-redux';
-import { useInitFonts } from './src/assets/fonts/use-init-fonts';
-import store from './src/store';
-import * as storage from './src/services/storage';
+import React, { useRef } from 'react'
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
+import { EvaIconsPack } from '@ui-kitten/eva-icons'
+import * as eva from '@eva-design/eva'
+import { NavigationContainerRef } from '@react-navigation/native'
+import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context'
+import { Provider } from 'react-redux'
+import store from './src/store'
+import * as storage from './src/services/storage'
 import {
   canExit,
   RootNavigator,
   setRootNavigation,
   useBackButtonHandler,
   useNavigationPersistence,
-} from './src/navigation';
-import { appTheme } from './src/theme';
-import './app.json';
+} from './src/navigation'
+import { appTheme } from './src/theme'
+import './app.json'
 
-import { enableScreens } from 'react-native-screens';
-import { AuthContextProvider } from './src/contexts/AuthContext';
-enableScreens();
+import { enableScreens } from 'react-native-screens'
+import { AuthContextProvider } from './src/contexts'
 
-export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
+enableScreens()
+
+export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
 export default (): React.ReactFragment => {
-  const [loadedFonts] = useInitFonts();
+  // const [loadedFonts] = useInitFonts();
 
-  const navigationRef = useRef<NavigationContainerRef>();
+  const navigationRef = useRef<NavigationContainerRef>()
   // @ts-ignore
-  setRootNavigation(navigationRef);
+  setRootNavigation(navigationRef)
   // @ts-ignore
-  useBackButtonHandler(navigationRef, canExit);
+  useBackButtonHandler(navigationRef, canExit)
   const {initialNavigationState, onNavigationStateChange} = useNavigationPersistence(
     storage,
     NAVIGATION_PERSISTENCE_KEY,
-  );
+  )
 
   return (
     <>
@@ -55,5 +55,5 @@ export default (): React.ReactFragment => {
         </ApplicationProvider>
       </Provider>
     </>
-  );
+  )
 }

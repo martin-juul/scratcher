@@ -12,7 +12,7 @@ const AlbumsStack = createStackNavigator<AlbumsParamList>()
 
 export const AlbumsStackScreen = () => (
   <AlbumsStack.Navigator>
-    <AlbumsStack.Screen name="Albums" component={AlbumsScreen} options={{headerShown: false}}/>
+    <AlbumsStack.Screen name="Albums" component={AlbumsScreen}/>
     <AlbumsStack.Screen name="Album" component={AlbumScreen}/>
   </AlbumsStack.Navigator>
 )

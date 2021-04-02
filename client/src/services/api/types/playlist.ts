@@ -11,4 +11,5 @@ export interface Playlist {
   created: Date;
   updated: Date;
   tracks?: PlaylistItem[];
+  trackCount?: number;
 }

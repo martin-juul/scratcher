@@ -1,4 +1,4 @@
-package com.scratcher.generated;
+package xyz.juul.scratcher.generated;
 
 import java.util.Arrays;
 import java.util.List;

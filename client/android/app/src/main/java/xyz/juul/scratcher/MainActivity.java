@@ -1,4 +1,4 @@
-package com.scratcher;
+package xyz.juul.scratcher;
 
 import com.facebook.react.ReactActivity;
 
