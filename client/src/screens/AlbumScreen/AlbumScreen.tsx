@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AlbumsParamList } from '../../navigation/albums-navigator';
-import { RouteProp } from '@react-navigation/native';
-import { Album, ApiService } from '../../services/api';
-import { Artwork } from '../../components/Artwork';
-import { TrackList } from '../../components/TrackList';
-import { setAlbum as storeSetAlbum } from '../../store/album';
-import { useAppDispatch } from '../../store';
-import { useApi } from '../../services/api/use-api';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { Layout, Text } from '@ui-kitten/components'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { AlbumsParamList } from '../../navigation/albums-navigator'
+import { RouteProp } from '@react-navigation/native'
+import { Album } from '../../services/api'
+import { Artwork } from '../../components/Artwork'
+import { TrackList } from '../../components/TrackList'
+import { setAlbum as storeSetAlbum } from '../../store/album'
+import { useAppDispatch } from '../../store'
+import { useApi } from '../../services/api/use-api'
 
 type AlbumsScreenNavigationProp = StackNavigationProp<AlbumsParamList, 'Album'>;
 type Props = {
@@ -19,20 +19,20 @@ type Props = {
 }
 
 export function AlbumScreen({navigation, route}: Props) {
-  const [album, setAlbum] = useState<Album>();
+  const [album, setAlbum] = useState<Album>()
   const api = useApi()
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    api.album(route.params.slug).then(r => setAlbum(r));
-  }, [route.params.slug, api]);
+    api.album(route.params.slug).then(r => setAlbum(r))
+  }, [route.params.slug, api])
 
   useEffect(() => {
     if (album) {
-      navigation.setOptions({title: album.title});
+      navigation.setOptions({title: album.title})
       dispatch(storeSetAlbum(album))
     }
-  }, [album]);
+  }, [album])
 
   return (
     <Layout style={styles.container}>
@@ -64,7 +64,7 @@ export function AlbumScreen({navigation, route}: Props) {
         )}
       </SafeAreaView>
     </Layout>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 8,
   },
-});
+})

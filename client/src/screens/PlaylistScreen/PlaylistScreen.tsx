@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { Playlist } from '../../services/api';
-import { useAppDispatch } from '../../store';
-import { PlaylistsParamList } from '../../navigation/playlists-navigator';
-import { useApi } from '../../services/api/use-api';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { Layout, Text } from '@ui-kitten/components'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RouteProp } from '@react-navigation/native'
+import { Playlist } from '../../services/api'
+import { useAppDispatch } from '../../store'
+import { PlaylistsParamList } from '../../navigation/playlists-navigator'
+import { useApi } from '../../services/api/use-api'
 
 type PlaylistScreenNavigationProp = StackNavigationProp<PlaylistsParamList, 'Playlist'>;
 type Props = {
@@ -16,20 +16,20 @@ type Props = {
 }
 
 export function PlaylistScreen({navigation, route}: Props) {
-  const [playlist, setPlaylist] = useState<Playlist>();
-  const api = useApi();
-  const dispatch = useAppDispatch();
+  const [playlist, setPlaylist] = useState<Playlist>()
+  const api = useApi()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    api.playlist(route.params.slug).then(r => setPlaylist(r));
-  }, [route.params.slug, api]);
+    api.playlist(route.params.slug).then(r => setPlaylist(r))
+  }, [route.params.slug, api])
 
   useEffect(() => {
     if (playlist) {
-      navigation.setOptions({title: playlist.name});
+      navigation.setOptions({title: playlist.name})
       // dispatch(storeSetAlbum(album))
     }
-  }, [playlist]);
+  }, [playlist])
 
   return (
     <Layout style={styles.container}>
@@ -40,9 +40,9 @@ export function PlaylistScreen({navigation, route}: Props) {
               <Text style={styles.title}>{playlist.name}</Text>
             </View>
 
-            <View style={{ flexDirection: 'column' }}>
+            <View style={{flexDirection: 'column'}}>
               {playlist.tracks?.map(track => (
-                <View style={{ width: '100%' }}>
+                <View style={{width: '100%'}}>
                   <Text>{track.title}</Text>
                   <Text>{track.artists.join(', ')}</Text>
                 </View>
@@ -52,7 +52,7 @@ export function PlaylistScreen({navigation, route}: Props) {
         )}
       </SafeAreaView>
     </Layout>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 8,
   },
-});
+})

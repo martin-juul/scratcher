@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { createContext, useState } from 'react';
+import * as React from 'react'
+import { createContext, useState } from 'react'
 
 export interface AuthContextState {
   isSignedIn: boolean;
@@ -10,22 +10,24 @@ export interface AuthContextState {
 
 export const AuthContext = createContext<AuthContextState>({
   isSignedIn: false,
-  setIsSignedIn: () => {},
+  setIsSignedIn: () => {
+  },
   token: '',
-  setToken: () => {},
-});
+  setToken: () => {
+  },
+})
 
-AuthContext.displayName = 'AuthContext';
+AuthContext.displayName = 'AuthContext'
 
-const Provider = AuthContext.Provider;
+const Provider = AuthContext.Provider
 
 export function AuthContextProvider({children}: { children: React.ReactNode }) {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [token, setToken] = useState<string|null>(null)
+  const [isSignedIn, setIsSignedIn] = useState(false)
+  const [token, setToken] = useState<string | null>(null)
 
   return (
-    <Provider value={{isSignedIn, setIsSignedIn, token, setToken }}>
+    <Provider value={{isSignedIn, setIsSignedIn, token, setToken}}>
       {children}
     </Provider>
-  );
+  )
 }
