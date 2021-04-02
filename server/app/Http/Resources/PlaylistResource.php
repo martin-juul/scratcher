@@ -20,13 +20,14 @@ class PlaylistResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'name'     => $this->name,
-            'slug'     => $this->slug,
-            'isPublic' => $this->is_public,
-            'created'  => $this->created_at,
-            'updated'  => $this->updated_at,
-            'tracks'   => TrackResource::collection($this->whenLoaded('tracks')),
-            'user'     => UserResource::make($this->whenLoaded('user')),
+            'name'       => $this->name,
+            'slug'       => $this->slug,
+            'isPublic'   => $this->is_public,
+            'created'    => $this->created_at,
+            'updated'    => $this->updated_at,
+            'tracks'     => TrackResource::collection($this->whenLoaded('tracks')),
+            'trackCount' => $this->tracks_count,
+            'user'       => UserResource::make($this->whenLoaded('user')),
         ];
     }
 }

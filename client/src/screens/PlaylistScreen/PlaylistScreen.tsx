@@ -42,9 +42,9 @@ export function PlaylistScreen({navigation, route}: Props) {
 
             <View style={{flexDirection: 'column'}}>
               {playlist.tracks?.map(track => (
-                <View style={{width: '100%'}}>
-                  <Text>{track.title}</Text>
-                  <Text>{track.artists.join(', ')}</Text>
+                <View style={{width: '100%'}} key={track.sha256 + track.order}>
+                  <Text style={styles.trackTitle}>{track.title}</Text>
+                  <Text style={styles.artist}>{track.artists.slice().map(x => x.name).join(', ')}</Text>
                 </View>
               ))}
             </View>
@@ -78,8 +78,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 22,
   },
+  trackTitle: {
+    fontWeight: '600',
+    fontSize: 18,
+  },
   artist: {
     fontWeight: '600',
-    marginTop: 8,
+    marginTop: 2,
   },
 })

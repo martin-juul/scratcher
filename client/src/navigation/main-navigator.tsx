@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 })
 
 const ALBUM_ICON = (props: any) => <Icon {...props} name='grid-outline'/>
+const PLAYLIST_ICON = (props: any) => <Icon {...props} name='list-outline'/>
 
 const BottomTabBar = ({navigation, state}: any) => (
   <BottomNavigation
@@ -27,6 +28,7 @@ const BottomTabBar = ({navigation, state}: any) => (
     onSelect={index => navigation.navigate(state.routeNames[index])}
   >
     <BottomNavigationTab icon={ALBUM_ICON} title="Albums"/>
+    <BottomNavigationTab icon={PLAYLIST_ICON} title="Playlists"/>
   </BottomNavigation>
 )
 

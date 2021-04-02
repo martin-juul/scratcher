@@ -12,7 +12,7 @@ const PlaylistsStack = createStackNavigator<PlaylistsParamList>()
 
 export const PlaylistsStackScreen = () => (
   <PlaylistsStack.Navigator>
-    <PlaylistsStack.Screen name="Playlists" component={PlaylistsScreen} options={{headerShown: false}}/>
+    <PlaylistsStack.Screen name="Playlists" component={PlaylistsScreen}/>
     <PlaylistsStack.Screen name="Playlist" component={PlaylistScreen}/>
   </PlaylistsStack.Navigator>
 )

@@ -30,7 +30,7 @@ class PlaylistPolicy
      */
     public function view(User $user, Playlist $playlist)
     {
-        return $playlist->is_public;
+        return $playlist->is_public || $user->id === $playlist->user_id || $user->isAdmin();
     }
 
     /**

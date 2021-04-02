@@ -46,6 +46,8 @@ class Playlist extends AbstractModel
         'is_public' => 'bool',
     ];
 
+    protected $withCount = ['tracks'];
+
     public function sluggable(): array
     {
         return [
