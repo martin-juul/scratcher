@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Card, Layout, List, Text } from '@ui-kitten/components'
 import { ListRenderItemInfo, Pressable, SafeAreaView, StyleSheet, TextStyle, View } from 'react-native'
 import { Playlist } from '../../services/api'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { PlaylistsParamList } from '../../navigation/playlists-navigator'
-import { useApi } from '../../services/api/use-api'
+import { AuthContext } from '../../contexts'
 
 type PlaylistsScreenNavigationProp = BottomTabNavigationProp<PlaylistsParamList, 'Playlists'>;
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export function PlaylistsScreen({navigation}: Props) {
-  const api = useApi()
+  const { api } = useContext(AuthContext)
   const [playlists, setPlaylists] = useState<Omit<Playlist, 'tracks'>[]>([])
 
   useEffect(() => {

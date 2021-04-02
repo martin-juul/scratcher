@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { RootParamList } from '../../navigation'
@@ -15,7 +15,7 @@ import { appTheme } from '../../theme'
 import { APP_URL } from '@env'
 import { Progress } from '../../components/Player'
 import { useTypedSelector } from '../../store/rootReducer'
-import { useApi } from '../../services/api/use-api'
+import { AuthContext } from '../../contexts'
 
 type AlbumsScreenNavigationProp = StackNavigationProp<RootParamList, 'Player'>;
 type Props = {
@@ -29,7 +29,7 @@ export function PlayerScreen({navigation, route}: Props) {
     width: 300,
   }
 
-  const api = useApi()
+  const { api } = useContext(AuthContext)
   const album = useTypedSelector(state => state.album)
 
   const [track, setTrack] = useState<Track>()

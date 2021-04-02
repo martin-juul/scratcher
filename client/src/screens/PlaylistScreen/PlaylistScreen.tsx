@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { Layout, Text } from '@ui-kitten/components'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -7,7 +7,7 @@ import { RouteProp } from '@react-navigation/native'
 import { Playlist } from '../../services/api'
 import { useAppDispatch } from '../../store'
 import { PlaylistsParamList } from '../../navigation/playlists-navigator'
-import { useApi } from '../../services/api/use-api'
+import { AuthContext } from '../../contexts'
 
 type PlaylistScreenNavigationProp = StackNavigationProp<PlaylistsParamList, 'Playlist'>;
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
 
 export function PlaylistScreen({navigation, route}: Props) {
   const [playlist, setPlaylist] = useState<Playlist>()
-  const api = useApi()
+  const { api } = useContext(AuthContext)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

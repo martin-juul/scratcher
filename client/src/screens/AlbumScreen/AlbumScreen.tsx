@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { Layout, Text } from '@ui-kitten/components'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -10,7 +10,7 @@ import { Artwork } from '../../components/Artwork'
 import { TrackList } from '../../components/TrackList'
 import { setAlbum as storeSetAlbum } from '../../store/album'
 import { useAppDispatch } from '../../store'
-import { useApi } from '../../services/api/use-api'
+import { AuthContext } from '../../contexts'
 
 type AlbumsScreenNavigationProp = StackNavigationProp<AlbumsParamList, 'Album'>;
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 
 export function AlbumScreen({navigation, route}: Props) {
   const [album, setAlbum] = useState<Album>()
-  const api = useApi()
+  const { api } = useContext(AuthContext)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

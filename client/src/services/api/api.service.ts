@@ -70,8 +70,12 @@ export class ApiService {
     return res.data
   }
 
-  setToken(token: string) {
-    this.client.setHeader('authorization', `Bearer ${token}`)
+  setToken(token: string | null) {
+    if (token) {
+      this.client.setHeader('authorization', `Bearer ${token}`)
+    } else {
+      this.client.deleteHeader('authorization')
+    }
   }
 
   private collectionOptions(options?: Partial<CollectionRequest>): CollectionRequest {
