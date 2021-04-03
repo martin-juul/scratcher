@@ -41,10 +41,8 @@ export class ApiService {
     return (res.data as Response<Album>).data
   }
 
-  async track(album: Album | string, sha256: string) {
-    const slug = typeof album === 'string' ? album : album.slug
-
-    const res = await this.client.get(`/api/albums/${slug}/tracks/${sha256}`)
+  async track(url: string) {
+    const res = await this.client.get(url)
 
     return (res.data as Response<Track>).data
   }

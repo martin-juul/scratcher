@@ -1,5 +1,6 @@
 import { Genre } from './genre'
 import { Artist } from './person'
+import { Artwork } from './artwork'
 
 export interface Track {
   title: string;
@@ -12,9 +13,11 @@ export interface Track {
   bitrate: number;
   length: number;
   stream: string;
+  self: string;
   track_number: string | number;
   genres: Genre[];
   artists: Artist[];
   created: Date;
   updated: Date;
+  artwork?: Artwork;
 }
