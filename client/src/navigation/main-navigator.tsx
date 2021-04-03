@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
 import { AlbumsStackScreen } from './albums-navigator'
 import { PlaylistsStackScreen } from './playlists-navigator'
+import { MiniPlayer } from '../components/MiniPlayer'
 
 export type PrimaryParamList = {
   Albums: undefined;
@@ -22,18 +23,26 @@ const ALBUM_ICON = (props: any) => <Icon {...props} name='grid-outline'/>
 const PLAYLIST_ICON = (props: any) => <Icon {...props} name='list-outline'/>
 
 const BottomTabBar = ({navigation, state}: any) => (
-  <BottomNavigation
-    style={styles.bottomNavigation}
-    selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}
-  >
-    <BottomNavigationTab icon={ALBUM_ICON} title="Albums"/>
-    <BottomNavigationTab icon={PLAYLIST_ICON} title="Playlists"/>
-  </BottomNavigation>
+  <>
+    <MiniPlayer />
+
+    <BottomNavigation
+      style={styles.bottomNavigation}
+      selectedIndex={state.index}
+      onSelect={index => navigation.navigate(state.routeNames[index])}
+    >
+      <BottomNavigationTab icon={ALBUM_ICON} title="Albums"/>
+      <BottomNavigationTab icon={PLAYLIST_ICON} title="Playlists"/>
+    </BottomNavigation>
+  </>
 )
 
 export const MainNavigator = () => (
-  <Navigator lazy={false} tabBar={props => <BottomTabBar {...props} />}>
+  <Navigator
+    lazy={false}
+    tabBar={props => <BottomTabBar {...props}
+    />
+  }>
     <Screen name='Albums' component={AlbumsStackScreen}/>
     <Screen name='Playlists' component={PlaylistsStackScreen}/>
   </Navigator>

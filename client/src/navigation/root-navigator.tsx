@@ -2,11 +2,11 @@ import * as React from 'react'
 import { useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { DarkTheme, NavigationContainer, NavigationContainerRef, Theme } from '@react-navigation/native'
+import { AuthContext } from '../contexts'
 import { MainNavigator } from './main-navigator'
 import { AlbumScreen } from '../screens/AlbumScreen/AlbumScreen'
-import { PlayerScreen } from '../screens/PlayerScreen/PlayerScreen'
-import { AuthContext } from '../contexts/AuthContext'
 import { LoginScreen } from '../screens/LoginScreen/LoginScreen'
+import { PlayerScreen } from '../screens/PlayerScreen/PlayerScreen'
 
 export type MainStackParamList = {
   MainStack: undefined
@@ -24,8 +24,8 @@ const MainStackScreen = () => (
 
 export type RootParamList = {
   Main: undefined
-  Player: { albumSlug: string, sha: string, nextSha: string | undefined, prevSha: string | undefined }
   Login: undefined
+  Player: undefined
 }
 
 const RootStack = createStackNavigator<RootParamList>()
@@ -38,7 +38,7 @@ const RootStackScreen = () => {
       {auth.isSignedIn ? (
         <>
           <RootStack.Screen name="Main" component={MainStackScreen} options={{headerShown: false}}/>
-          <RootStack.Screen name="Player" component={PlayerScreen}/>
+          <RootStack.Screen name="Player" component={PlayerScreen} options={{headerShown: false, detachPreviousScreen: false, gestureEnabled: true}} />
         </>
       ) : (
         <>
