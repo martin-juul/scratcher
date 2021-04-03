@@ -15,7 +15,7 @@ class PlaylistUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tracks.*.sort'  => 'required|int',
+            'tracks.*.sort'   => 'required|int',
             'tracks.*.sha256' => 'required|exists:tracks,sha256',
         ];
     }
