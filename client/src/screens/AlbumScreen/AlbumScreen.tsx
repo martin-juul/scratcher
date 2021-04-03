@@ -11,6 +11,7 @@ import { TrackList } from '../../components/TrackList'
 import { setAlbum as storeSetAlbum } from '../../store/album'
 import { useAppDispatch } from '../../store'
 import { AuthContext } from '../../contexts'
+import { useTypedSelector } from '../../store/rootReducer'
 
 type AlbumsScreenNavigationProp = StackNavigationProp<AlbumsParamList, 'Album'>;
 type Props = {
@@ -22,6 +23,7 @@ export function AlbumScreen({navigation, route}: Props) {
   const [album, setAlbum] = useState<Album>()
   const { api } = useContext(AuthContext)
   const dispatch = useAppDispatch()
+  const queue = useTypedSelector(state => state.queue)
 
   useEffect(() => {
     api.album(route.params.slug).then(r => setAlbum(r))
@@ -39,7 +41,7 @@ export function AlbumScreen({navigation, route}: Props) {
       <SafeAreaView style={styles.view}>
         {album && (
           <>
-            <View style={{height: '43%'}}>
+            <View style={{height: '45%'}}>
               <View style={styles.cover}>
                 {album.artwork && (
                   <Artwork
@@ -58,7 +60,7 @@ export function AlbumScreen({navigation, route}: Props) {
             </View>
 
             <View style={{height: '60%'}}>
-              <TrackList albumSlug={album.slug} tracks={album.tracks}/>
+              <TrackList tracks={album.tracks} addAllOnPlay={queue.tracks.length < 1}/>
             </View>
           </>
         )}
@@ -72,8 +74,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   view: {
-    paddingHorizontal: 18,
-    paddingVertical: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 32,
+    flex: 1,
   },
   cover: {
     marginBottom: 12,

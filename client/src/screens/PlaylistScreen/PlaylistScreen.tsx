@@ -5,9 +5,10 @@ import { Layout, Text } from '@ui-kitten/components'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { Playlist } from '../../services/api'
-import { useAppDispatch } from '../../store'
 import { PlaylistsParamList } from '../../navigation/playlists-navigator'
 import { AuthContext } from '../../contexts'
+import { TrackList } from '../../components/TrackList'
+import { useTypedSelector } from '../../store/rootReducer'
 
 type PlaylistScreenNavigationProp = StackNavigationProp<PlaylistsParamList, 'Playlist'>;
 type Props = {
@@ -17,8 +18,8 @@ type Props = {
 
 export function PlaylistScreen({navigation, route}: Props) {
   const [playlist, setPlaylist] = useState<Playlist>()
-  const { api } = useContext(AuthContext)
-  const dispatch = useAppDispatch()
+  const {api} = useContext(AuthContext)
+  const queue = useTypedSelector(state => state.queue)
 
   useEffect(() => {
     api.playlist(route.params.slug).then(r => setPlaylist(r))
@@ -27,27 +28,19 @@ export function PlaylistScreen({navigation, route}: Props) {
   useEffect(() => {
     if (playlist) {
       navigation.setOptions({title: playlist.name})
-      // dispatch(storeSetAlbum(album))
     }
   }, [playlist])
 
   return (
     <Layout style={styles.container}>
       <SafeAreaView style={styles.view}>
-        {playlist && (
+        {(playlist && playlist.tracks) && (
           <>
             <View style={styles.header}>
               <Text style={styles.title}>{playlist.name}</Text>
             </View>
 
-            <View style={{flexDirection: 'column'}}>
-              {playlist.tracks?.map(track => (
-                <View style={{width: '100%'}} key={track.sha256 + track.order}>
-                  <Text style={styles.trackTitle}>{track.title}</Text>
-                  <Text style={styles.artist}>{track.artists.slice().map(x => x.name).join(', ')}</Text>
-                </View>
-              ))}
-            </View>
+            <TrackList tracks={playlist.tracks} addAllOnPlay={queue.tracks.length < 1}/>
           </>
         )}
       </SafeAreaView>
