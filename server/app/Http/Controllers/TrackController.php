@@ -25,7 +25,7 @@ class TrackController extends Controller
      */
     public function index(Album $album)
     {
-        $album->loadMissing('tracks');
+        $album->loadMissing('tracks', 'tracks.album.artwork');
 
         return TrackResource::collection($album->tracks);
     }
