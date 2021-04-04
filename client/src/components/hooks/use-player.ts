@@ -65,7 +65,7 @@ export function usePlayer() {
       }
     }
 
-    if (track) {
+    if (track?.stream) {
       const source = {
         uri: track.stream,
         overrideFileExtensionAndroid: track.file_format,

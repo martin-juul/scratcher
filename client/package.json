@@ -33,6 +33,7 @@
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
     "apisauce": "^2.0.1",
+    "expo-asset": "^8.2.2",
     "expo-av": "^9.0.0",
     "expo-font": "^9.0.0",
     "react": "17.0.1",

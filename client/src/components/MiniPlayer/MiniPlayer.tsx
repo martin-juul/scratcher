@@ -14,7 +14,7 @@ export function MiniPlayer() {
   const noop = () => {
   }
 
-  if (!track) {
+  if (!track?.self) {
     return <></>
   }
 
