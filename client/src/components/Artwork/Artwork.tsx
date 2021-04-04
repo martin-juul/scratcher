@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { Artwork as ArtworkType } from '../../services/api'
-import { Image, ImageProps } from 'react-native'
+import FastImage, { FastImageProps } from 'react-native-fast-image'
+
 
 export interface ArtworkProps {
   artwork: ArtworkType;
   height: number;
   width: number;
-  props?: Partial<ImageProps>;
+  props?: Partial<FastImageProps>;
 }
 
 export function Artwork({artwork, height, width, props}: ArtworkProps) {
@@ -42,13 +43,14 @@ export function Artwork({artwork, height, width, props}: ArtworkProps) {
   return (
     <>
       {dimensions && (
-        <Image
+        <FastImage
           {...props}
-          source={{
-            uri: artwork.url,
+          style={{
             height: dimensions.height,
             width: dimensions.width,
-            cache: 'force-cache',
+          }}
+          source={{
+            uri: artwork.url,
           }}/>
       )}
     </>
