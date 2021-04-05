@@ -1,4 +1,6 @@
 import { ApisauceInstance, create } from 'apisauce'
+import { setupCache } from 'axios-cache-adapter'
+import { APP_URL } from '@env'
 import {
   Album,
   AlbumCollectionResponse,
@@ -9,14 +11,44 @@ import {
   Response,
   Track,
 } from './types'
-import { APP_URL } from '@env'
+import { AsyncStorage, load, remove, save } from '../storage'
 
 export class ApiService {
   private client: ApisauceInstance
 
   constructor() {
+    const cache = setupCache({
+      maxAge: 15 * 60 * 1000,
+      store: {
+        getItem: (key: string) => {
+          return load(key)
+        },
+        async setItem(key: string, value: string | object) {
+          await save(`api-service:${key}`, value)
+          return value
+        },
+        async removeItem(key: string) {
+          await remove(key)
+        },
+        async clear() {
+          const keys = await AsyncStorage.getAllKeys()
+          if (!keys) return
+          const items = keys.filter(x => x.startsWith('api-service:'))
+          await AsyncStorage.multiRemove(items)
+        },
+        async length() {
+          const keys = await AsyncStorage.getAllKeys()
+          if (!keys) {
+            return 0
+          }
+          return keys.filter(x => x.startsWith('api-service:')).length
+        },
+      },
+    })
+
     this.client = create({
       baseURL: APP_URL,
+      adapter: cache.adapter,
     })
   }
 

@@ -1,0 +1,9 @@
+.git
+stubs
+vendor
+.env
+.phpstorm.meta.php
+_ide_helper.php
+docker-compose.yml
+insomnia-workspace.json
+README.md

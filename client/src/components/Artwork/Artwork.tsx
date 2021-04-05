@@ -1,16 +1,18 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { Artwork as ArtworkType } from '../../services/api'
-import { Image, ImageProps } from 'react-native'
+import FastImage, { FastImageProps, ImageStyle } from 'react-native-fast-image'
+import { StyleProp } from 'react-native'
 
 export interface ArtworkProps {
-  artwork: ArtworkType;
-  height: number;
-  width: number;
-  props?: Partial<ImageProps>;
+  artwork: ArtworkType
+  height: number
+  width: number
+  style?: StyleProp<ImageStyle>
+  testID?: string;
 }
 
-export function Artwork({artwork, height, width, props}: ArtworkProps) {
+export function Artwork({artwork, height, width, style, testID}: ArtworkProps) {
   const [dimensions, setDimensions] = useState<{ height: number, width: number }>()
 
   useEffect(() => {
@@ -42,14 +44,16 @@ export function Artwork({artwork, height, width, props}: ArtworkProps) {
   return (
     <>
       {dimensions && (
-        <Image
-          {...props}
-          source={{
-            uri: artwork.url,
+        <FastImage
+          style={[style, {
             height: dimensions.height,
             width: dimensions.width,
-            cache: 'force-cache',
-          }}/>
+          }]}
+          source={{
+            uri: artwork.url,
+          }}
+          testID={testID}
+        />
       )}
     </>
   )
