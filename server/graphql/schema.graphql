@@ -1,0 +1,88 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    users: [User!]! @paginate(defaultCount: 10)
+    user(id: ID @eq): User @find
+    albums: [Album!]! @paginate(defaultCount: 10)
+    albumBySlug(slug: ID): Album @find
+    people: [Person!]! @paginate(defaultCount: 10)
+    genres: [Genre!]! @paginate(defaultCount: 10)
+    track: [Track!]! @paginate(defaultCount: 10)
+    trackBySha(sha256: String @eq): Track @find
+    playlists: [Playlist!]! @paginate(defaultCount: 10)
+    playlistBySlug(slug: String @eq): Playlist @find
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Artwork {
+    id: ID!
+    basename: String!
+    mime: String!
+    size: Int!
+    height: Int!
+    width: Int!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Person {
+    id: ID!
+    name: String!
+    description: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Genre {
+    id: ID!
+    name: String!
+    slug: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Album {
+    id: ID!
+    title: String!
+    slug: String!
+    year: Int!
+    tracks: [Track!] @hasMany
+    artwork: Artwork! @morphOne
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Track {
+    id: ID!
+    title: String!
+    sha256: String
+    path: String!
+    file_format: String!
+    file_size: Int!
+    mime_type: String!
+    isrc: String!
+    bitrate: Int!
+    length: Int!
+    track_number: Int!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Playlist {
+    id: ID!
+    name: String!
+    slug: String!
+    is_public: Boolean!
+    tracks: [Track!]
+}
