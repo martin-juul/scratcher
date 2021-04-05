@@ -45,7 +45,7 @@ export function AlbumsScreen({navigation}: Props) {
               artwork={item.artwork}
               height={160}
               width={160}
-              props={{borderRadius: 5, style: {opacity: 1}}}
+              style={{borderRadius: 5, opacity: 1}}
             />
           )}
         </View>

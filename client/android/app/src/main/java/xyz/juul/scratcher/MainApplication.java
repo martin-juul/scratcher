@@ -18,6 +18,8 @@ import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
 import org.unimodules.core.interfaces.SingletonModule;
 
+import com.nozbe.watermelondb.WatermelonDBPackage;
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 
@@ -33,9 +35,9 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
 
-            // Add unimodules
             List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
-              new ModuleRegistryAdapter(mModuleRegistryProvider)
+              new ModuleRegistryAdapter(mModuleRegistryProvider),
+              new WatermelonDBPackage()
             );
             packages.addAll(unimodules);
 
