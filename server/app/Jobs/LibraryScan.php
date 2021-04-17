@@ -31,6 +31,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
      * Execute the job.
      *
      * @return void
+     * @throws \League\Flysystem\FileExistsException
      */
     public function handle(): void
     {
@@ -69,7 +70,12 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         });
     }
 
-
+    /**
+     * @param array $id3
+     * @param FileResult $file
+     * @param Album $album
+     * @throws \League\Flysystem\FileExistsException
+     */
     private function saveArtwork(array $id3, FileResult $file, Album $album): void
     {
         $picture = Arr::first(Arr::get($id3, 'id3v2.APIC'));
@@ -97,6 +103,10 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
+    /**
+     * @param array $people
+     * @param Track $track
+     */
     private function saveArtists(array $people, Track $track): void
     {
         foreach ($people as $artists) {
@@ -107,6 +117,12 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
+    /**
+     * @param mixed $albumName
+     * @param array $id3
+     * @param FileResult $file
+     * @return Album
+     */
     private function createAlbum(mixed $albumName, array $id3, FileResult $file): Album
     {
         $album = Album::make(['title' => $albumName, 'year' => Arr::first(Arr::get($id3, 'tags.id3v2.year'))]);
@@ -119,6 +135,10 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         return $album;
     }
 
+    /**
+     * @param array $genres
+     * @param Track $track
+     */
     private function saveGenres(array $genres, Track $track): void
     {
         foreach ($genres as $genre) {
@@ -131,6 +151,11 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
+    /**
+     * @param array $id3
+     * @param FileResult $file
+     * @return Track
+     */
     private function makeTrack(array $id3, FileResult $file): Track
     {
         return Track::make([
@@ -138,7 +163,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
             'sha256'       => $file->sha256,
             'path'         => $file->path,
             'file_format'  => Arr::get($id3, 'fileformat'),
-            'file_size'    => (int)$file->size,
+            'file_size'    => $file->size,
             'mime_type'    => $file->mime,
             'isrc'         => Arr::first(Arr::get($id3, 'tags.id3v2.isrc')),
             'bitrate'      => (int)Arr::get($id3, 'bitrate'),

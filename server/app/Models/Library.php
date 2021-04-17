@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Cviebrock\EloquentSluggable\{Sluggable, SluggableScopeHelpers};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**

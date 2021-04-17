@@ -78,10 +78,19 @@ class User extends Authenticatable
     protected $keyType = 'string';
     protected $dateFormat = 'Y-m-d H:i:sO';
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(static function (User $model) {
+            $model->email = mb_strtolower($model->email);
+        });
+    }
+
     public function setRoleAttribute(string $role): void
     {
         if (!in_array($role, static::ROLES, true)) {
-            throw new \InvalidArgumentException("{$role} is not a valid role. Options are: " . implode(', ', static::ROLES));
+            throw new \InvalidArgumentException("$role is not a valid role. Options are: " . implode(', ', static::ROLES));
         }
 
         $this->attributes['role'] = $role;
