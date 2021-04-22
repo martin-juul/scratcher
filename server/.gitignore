@@ -1,6 +1,4 @@
-.idea/commandlinetools/*
-.idea/*.xml
-.idea/*.iml
+.idea
 
 /node_modules
 /public/hot

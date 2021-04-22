@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scanner\Metadata;
+namespace App\Scanner\ID3;
 
 abstract class MediaFileReader
 {
@@ -180,4 +180,6 @@ abstract class MediaFileReader
             | (($size2 & 0x7f) << 14)
             | (($size1 & 0x7f) << 21);
     }
+
+    abstract public function loadRange(array $range, callable $callbacks): void;
 }

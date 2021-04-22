@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scanner\Metadata;
+namespace App\Scanner\ID3;
 
 class StringUtil
 {
@@ -109,7 +109,7 @@ class StringUtil
         return new DecodedString(implode('', $collector), $ix);
     }
 
-    public static function readNullTerminatedString(array $bytes, ?int $maxBytes = null)
+    public static function readNullTerminatedString(array $bytes, ?int $maxBytes = null): DecodedString
     {
         $collector = [];
         $maxBytes = $maxBytes ?? count($bytes);

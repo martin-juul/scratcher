@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scanner\Metadata;
+namespace App\Scanner\ID3;
 
 use JetBrains\PhpStorm\Pure;
 
