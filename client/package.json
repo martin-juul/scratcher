@@ -38,7 +38,7 @@
     "axios-cache-adapter": "^2.7.3",
     "expo-asset": "^8.2.2",
     "expo-av": "^9.0.0",
-    "expo-font": "^9.0.0",
+    "expo-font": "^9.1.0",
     "jsc-android": "^250230.2.1",
     "react": "17.0.1",
     "react-native": "0.64.0",
