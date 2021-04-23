@@ -46,7 +46,7 @@ abstract class MediaTagReader
 
     abstract protected function loadData(callable $callbacks): void;
 
-    abstract protected function parseData(array $tags);
+    abstract protected function parseData(MediaFileReader $data, array $tags);
 
     protected function expandShortcutTags(array $tagsWithShortcuts): ?array
     {

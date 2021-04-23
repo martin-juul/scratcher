@@ -184,7 +184,21 @@ class ID3V2FrameReader
         }
     }
 
-    private static function readPictureFrame()
+    public static function getUnsynchFileReader(MediaFileReader $data, int $offset, int $size): MediaFileReader
+    {
+        $frameData = $data->getBytesAt($offset, $size);
+        for ($i = 0; $i < count($frameData) - 1; $i++) {
+            if ($frameData[$i] === 0xff && $frameData[$i + 1] === 0x00) {
+                unset($frameData[$i + 1]);
+            }
+        }
+
+        $frameData = array_values($frameData);
+
+        return new ArrayFileReader($frameData);
+    }
+
+    private static function readPictureFrame(): callable
     {
         return static function (int $offset, int $length, MediaFileReader $data, array $flags = [], array|null $id3header = null) {
             $start = $offset;

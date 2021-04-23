@@ -60,7 +60,7 @@ class ID3v2TagReader extends MediaTagReader
         });
     }
 
-    protected function parseData(array $tags)
+    protected function parseData(MediaFileReader $data, array $tags)
     {
         $offset = 0;
         $major = $this->mediaFileReader->getByteAt($offset + 3);
@@ -111,8 +111,12 @@ class ID3v2TagReader extends MediaTagReader
             // before parsing each individual frame. Individual frame sizes might not
             // take unsynchronisation into consideration when it's set on the tag
             // header.
-
+            $data = ID3V2FrameReader::getUnsynchFileReader($data, $offset, $size);
+            $offset = 0;
+            $offsetEnd = $data->getSize();
         }
+
+        $frames = ID3V2FrameReader::readFrames($offsetEnd, $offsetEnd, $data, $id3, $expandedTags);
 
         return $id3;
     }

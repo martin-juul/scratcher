@@ -7,11 +7,7 @@ abstract class MediaFileReader
     protected bool $isInitialized = false;
     protected int $size = 0;
 
-    public function __construct(protected string $path)
-    {
-    }
-
-    abstract public static function canReadFile(string $file);
+    abstract public static function canReadFile($file): bool;
 
     public function getSize(): int
     {
