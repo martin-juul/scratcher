@@ -65,11 +65,7 @@ class ID3v2TagReader extends MediaTagReader
         $offset = 0;
         $major = $this->mediaFileReader->getByteAt($offset + 3);
         if ($major > 4) {
-            return [
-                'type'    => static::TAG,
-                'version' => '>2.4',
-                'tags'    => [],
-            ];
+            return new ID3(tag: static::TAG, version: '>2.4');
         }
         $revision = $this->mediaFileReader->getByteAt($offset + 4);
         $unsynch = $this->mediaFileReader->isBitSetAt($offset + 5, 7);
@@ -96,11 +92,11 @@ class ID3v2TagReader extends MediaTagReader
             major: $major,
             revision: $revision,
             flags: [
-                'unsynchronisation'      => $unsynch,
-                'extended_header'        => $xheader,
-                'experimental_indicator' => $xindicator,
-                'footer_present'         => false,
-            ],
+            'unsynchronisation'      => $unsynch,
+            'extended_header'        => $xheader,
+            'experimental_indicator' => $xindicator,
+            'footer_present'         => false,
+        ],
             size: $size,
             tags: []
         );
@@ -109,7 +105,12 @@ class ID3v2TagReader extends MediaTagReader
             $expandedTags = $this->expandShortcutTags($tags);
         }
 
+        $offsetEnd = $size + 10; // header size
         if ($id3['flags']['unsynchronisation']) {
+            // When this flag is set the entire tag needs to be un-unsynchronised
+            // before parsing each individual frame. Individual frame sizes might not
+            // take unsynchronisation into consideration when it's set on the tag
+            // header.
 
         }
 

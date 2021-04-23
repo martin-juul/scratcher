@@ -41,4 +41,14 @@ class Charset
     {
         return $this->charset;
     }
+
+    public static function getTextEncoding($bite): string
+    {
+        return match ($bite) {
+            0x01 => static::UTF_16,
+            0x02 => static::UTF_16_BE,
+            0x03 => static::UTF_8,
+            default => static::ISO_8859_1,
+        };
+    }
 }
