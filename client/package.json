@@ -51,7 +51,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-unimodules": "^0.13.3",
     "react-native-vector-icons": "^8.1.0",
-    "react-redux": "^7.2.3"
+    "react-redux": "^7.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
