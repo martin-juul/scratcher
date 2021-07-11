@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Track whereLength($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Track whereMimeType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Track wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Track whereSha256($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Track whereHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Track whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Track whereTrackNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Track whereUpdatedAt($value)
@@ -53,7 +53,7 @@ class Track extends AbstractModel
 
     protected $fillable = [
         'title',
-        'sha256',
+        'hash',
         'path',
         'file_format',
         'file_size',

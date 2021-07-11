@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\MetaAudio\Mp3;
 use App\Models\{Album, Artwork, Genre, Library, Person, Track};
-use App\Scanner\{FileResult, FileScanner};
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\{ShouldBeUnique, ShouldQueue};
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\{InteractsWithQueue, SerializesModels};
-use Illuminate\Support\{Arr, Facades\Storage, Str};
+use Illuminate\Support\{Arr, Facades\File, Facades\Storage, LazyCollection, Str};
+use Symfony\Component\Finder\SplFileInfo;
 
 class LibraryScan implements ShouldQueue, ShouldBeUnique
 {
@@ -34,22 +35,27 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $scanner = new FileScanner($this->library->path);
+        $tagger = new \App\MetaAudio\Tagger;
+        $tagger->addDefaultModules();
 
-        $scanner->listContents()->each(function (FileResult $file) use ($scanner) {
-            if (!$file->isAudio() || Track::whereSha256($file->sha256)->exists()) {
+        $files = File::allFiles($this->library->path);
+        $files = LazyCollection::make($files);
+
+        $files->each(function (SplFileInfo $file) use ($tagger) {
+            $hash = \Safe\sha1_file($file->getRealPath());
+            if (!Str::startsWith('audio/', File::mimeType($file->getRealPath())) || Track::whereHash($hash)->exists()) {
                 return;
             }
 
-            $id3 = $scanner->parseId3($file);
+            $id3 = $tagger->open($file->getRealPath());
 
-            $albumName = Arr::first(Arr::get($id3, 'tags.id3v2.album')) ?: $file->album;
+            $albumName = $id3->getAlbum();
             $album = Album::whereTitle($albumName)->first();
             if (!$album) {
-                $album = $this->createAlbum($albumName, $id3, $file);
+                $album = $this->createAlbum($id3);
             }
 
-            $track = $this->makeTrack($id3, $file);
+            $track = $this->makeTrack($id3, $file->getRealPath(), $hash);
             $track->album()->associate($album);
             $track->save();
 
@@ -70,7 +76,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
     }
 
 
-    private function saveArtwork(array $id3, FileResult $file, Album $album): void
+    private function saveArtwork(Mp3 $id3, SplFileInfo $file, Album $album): void
     {
         $picture = Arr::first(Arr::get($id3, 'id3v2.APIC'));
 
@@ -78,7 +84,7 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
             return;
         }
 
-        $filename = $file->sha256 . '.' . Str::after($picture['image_mime'], 'image/');
+        $filename = Has . '.' . Str::after($picture['image_mime'], 'image/');
         $disk = Storage::disk('artwork');
         $disk->write($filename, $picture['data']);
 
@@ -107,13 +113,13 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
-    private function createAlbum(mixed $albumName, array $id3, FileResult $file): Album
+    private function createAlbum(Mp3 $id3): Album
     {
-        $album = Album::make(['title' => $albumName, 'year' => Arr::first(Arr::get($id3, 'tags.id3v2.year'))]);
+        $album = Album::make(['title' => $id3->getTitle(), 'year' => $id3->getYear()]);
         $album->library()->associate($this->library);
         $album->save();
 
-        $artist = Person::firstOrCreate(['name' => Arr::first(Arr::get($id3, 'tags.id3v2.band'))] ?? $file->artist);
+        $artist = Person::firstOrCreate($id3->getArtist());
         $album->artist()->attach($artist->id, ['role' => 'artist']);
 
         return $album;
@@ -131,19 +137,18 @@ class LibraryScan implements ShouldQueue, ShouldBeUnique
         }
     }
 
-    private function makeTrack(array $id3, FileResult $file): Track
+    private function makeTrack(Mp3 $file, string $path, string $hash): Track
     {
         return Track::make([
-            'title'        => Arr::first(Arr::get($id3, 'tags.id3v2.title')) ?? $file->trackName,
-            'sha256'       => $file->sha256,
-            'path'         => $file->path,
-            'file_format'  => Arr::get($id3, 'fileformat'),
-            'file_size'    => (int)$file->size,
-            'mime_type'    => $file->mime,
-            'isrc'         => Arr::first(Arr::get($id3, 'tags.id3v2.isrc')),
-            'bitrate'      => (int)Arr::get($id3, 'bitrate'),
-            'length'       => (int)Arr::get($id3, 'playtime_seconds'),
-            'track_number' => Arr::first(Arr::get($id3, 'tags.id3v2.track_number')) ?? $file->trackNo,
+            'title'        => $file->getTitle(),
+            'hash'         => $hash,
+            'path'         => $path,
+            'file_size'    => File::size($path),
+            'mime_type'    => File::mimeType($path),
+            'isrc'         => $file->getIsrc(),
+            'bitrate'      => $file->getBitrate(),
+            'length'       => $file->getPlayTime(),
+            'track_number' => $file->getTrackNumber(),
         ]);
     }
 }

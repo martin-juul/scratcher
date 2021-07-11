@@ -22,7 +22,7 @@ class CreateTracksTable extends Migration
                 ->cascadeOnDelete();
 
             $table->text('title');
-            $table->text('sha256')->unique();
+            $table->text('hash')->unique();
             $table->text('path')->unique();
             $table->text('file_format')->nullable();
             $table->text('mime_type')->nullable();
