@@ -2,8 +2,7 @@
 
 namespace App\MetaAudio;
 
-use duncan3dc\MetaAudio\Exceptions\ReadException;
-use duncan3dc\MetaAudio\Exceptions\WriteException;
+use App\MetaAudio\Exceptions\{ReadException, WriteException};
 
 /**
  * A custom file handler.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "374c2330c462b24c1bf49a752e02ab4b",
+    "content-hash": "7961d34db383597b0446dda9619cefd8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -918,126 +918,6 @@
                 }
             ],
             "time": "2020-11-24T19:55:57+00:00"
-        },
-        {
-            "name": "duncan3dc/bom-string",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/duncan3dc/bom-string.git",
-                "reference": "7310a919404cff41d8c268251cc794052cbbfab7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/duncan3dc/bom-string/zipball/7310a919404cff41d8c268251cc794052cbbfab7",
-                "reference": "7310a919404cff41d8c268251cc794052cbbfab7",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "maglnet/composer-require-checker": "^2.0",
-                "phpstan/phpstan": "^0.11.7",
-                "phpunit/phpunit": "^8.1",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "duncan3dc\\Bom\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Craig Duncan",
-                    "email": "git@duncanc.co.uk",
-                    "homepage": "https://github.com/duncan3dc",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A small PHP library to handle byte order marks (BOM)",
-            "homepage": "https://github.com/duncan3dc/bom-string",
-            "keywords": [
-                "bom",
-                "utf-16",
-                "utf-8",
-                "utf16",
-                "utf8"
-            ],
-            "support": {
-                "issues": "https://github.com/duncan3dc/bom-string/issues",
-                "source": "https://github.com/duncan3dc/bom-string/tree/1.1.0"
-            },
-            "time": "2020-10-04T15:23:04+00:00"
-        },
-        {
-            "name": "duncan3dc/meta-audio",
-            "version": "0.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/duncan3dc/meta-audio.git",
-                "reference": "350b2f9f23dcf00dfb854e3d99634919cd74360b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/duncan3dc/meta-audio/zipball/350b2f9f23dcf00dfb854e3d99634919cd74360b",
-                "reference": "350b2f9f23dcf00dfb854e3d99634919cd74360b",
-                "shasum": ""
-            },
-            "require": {
-                "duncan3dc/bom-string": "^1.0",
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "duncan3dc/object-intruder": "^0.3 || ^1.0",
-                "duncan3dc/php-ini": "^1.0",
-                "maglnet/composer-require-checker": "^2.0",
-                "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^8.2",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "duncan3dc\\MetaAudio\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Craig Duncan",
-                    "email": "git@duncanc.co.uk",
-                    "homepage": "https://github.com/duncan3dc",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A library to read and write metadata tags to audio files",
-            "homepage": "https://github.com/duncan3dc/meta-audio",
-            "keywords": [
-                "MPG",
-                "apetag",
-                "apev1",
-                "apev2",
-                "audio",
-                "id3",
-                "id3v1",
-                "id3v2",
-                "metadata"
-            ],
-            "support": {
-                "issues": "https://github.com/duncan3dc/meta-audio/issues",
-                "source": "https://github.com/duncan3dc/meta-audio/tree/0.6.0"
-            },
-            "time": "2021-01-10T20:06:58+00:00"
         },
         {
             "name": "egulias/email-validator",
