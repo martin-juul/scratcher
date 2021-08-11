@@ -2,8 +2,7 @@
 
 namespace App\MetaAudio;
 
-use App\MetaAudio\Exceptions\ReadException;
-use App\MetaAudio\Exceptions\WriteException;
+use App\MetaAudio\Exceptions\{ReadException, WriteException};
 use SplFileObject;
 use const SEEK_CUR;
 use const SEEK_END;

@@ -3,10 +3,12 @@
 namespace App\MetaAudio\Modules;
 
 use App\MetaAudio\Bom\Util as Bom;
+use Exception;
 use JetBrains\PhpStorm\{ArrayShape, Pure};
 
 /**
  * Handle ID3v2.4 tags.
+ * @see https://id3.org/id3v2.3.0
  */
 class Id3v2 extends AbstractModule
 {
@@ -20,7 +22,7 @@ class Id3v2 extends AbstractModule
      * Get all the tags from the currently loaded file.
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getTags(): array
     {
@@ -104,7 +106,7 @@ class Id3v2 extends AbstractModule
      * Parse the header from the file.
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     #[ArrayShape([
         "version" => "mixed",
@@ -117,7 +119,7 @@ class Id3v2 extends AbstractModule
     {
         $preamble = $this->file->read(3);
         if ($preamble !== self::PREAMBLE) {
-            throw new \Exception("Invalid ID3 tag, expected [" . self::PREAMBLE . "], got [{$preamble}]");
+            throw new Exception("Invalid ID3 tag, expected [" . self::PREAMBLE . "], got [{$preamble}]");
         }
 
         $version = unpack('S', $this->file->read(2))[1];
@@ -195,7 +197,7 @@ class Id3v2 extends AbstractModule
      * @param array The tags to write as key/value pairs
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function putTags(array $tags): void
     {
@@ -273,11 +275,125 @@ class Id3v2 extends AbstractModule
      *
      * @return string
      */
-    public function getArtwork(): string
+    public function getAttachedPicture(): string
     {
         return $this->getTag('APIC');
     }
 
+    public function getComments(): string
+    {
+        return $this->getTag('COMM');
+    }
+
+    public function getEqualization()
+    {
+        return $this->getTag('EQUA');
+    }
+
+    public function getEventTimingCodes()
+    {
+        return $this->getTag('ETCO');
+    }
+
+    public function getInvolvedPeopleList()
+    {
+        return $this->getTag('IPLS');
+    }
+
+    public function getLinkedInformation()
+    {
+        return $this->getTag('LINK');
+    }
+
+    public function getMusicCdIdentifier()
+    {
+        return $this->getTag('MCDI');
+    }
+
+    public function getOwnershipFrame()
+    {
+        return $this->getTag('OWNE');
+    }
+
+    public function getPopularimeter()
+    {
+        return $this->getTag('POPM');
+    }
+
+    public function getSynchronizedLyrics()
+    {
+        return $this->getTag('SYLT');
+    }
+
+    public function getAlbumTitle()
+    {
+        return $this->getTag('TALB');
+    }
+
+    public function getComposer()
+    {
+        return $this->getTag('TCOM');
+    }
+
+    public function getDate()
+    {
+        return $this->getTag('TDAT');
+    }
+
+    public function getLyricist()
+    {
+        return $this->getTag('TEXT');
+    }
+
+    public function getLanguages()
+    {
+        return $this->getTag('TLAN');
+    }
+
+    public function getLength()
+    {
+        return $this->getTag('TLEN');
+    }
+
+    public function getOriginalReleaseYear()
+    {
+        return (int)$this->getTag('TORY');
+    }
+
+    public function getLeadPerformer()
+    {
+        return $this->getTag('TPE1');
+    }
+
+    public function getBand()
+    {
+        return $this->getTag('TPE2');
+    }
+
+    public function getConductor()
+    {
+        return $this->getTag('TPE3');
+    }
+
+    public function getRemixer()
+    {
+        return $this->getTag('TPE4');
+    }
+
+    public function getPublisher()
+    {
+        return $this->getTag('TPUB');
+    }
+
+    public function getIsrc(): string
+    {
+        return $this->getTag('TSRC');
+    }
+
+    public function getUnsychronizedLyrics()
+    {
+        return $this->getTag('USLT');
+    }
 
     /**
      * Get the track title.

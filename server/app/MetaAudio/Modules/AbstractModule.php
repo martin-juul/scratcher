@@ -2,7 +2,6 @@
 
 namespace App\MetaAudio\Modules;
 
-use App\MetaAudio\File;
 use App\MetaAudio\FileInterface;
 
 /**
@@ -67,11 +66,7 @@ abstract class AbstractModule implements ModuleInterface
             $this->tags = $this->getTags();
         }
 
-        if (!isset($this->tags[$key])) {
-            return "";
-        }
-
-        return $this->tags[$key];
+        return $this->tags[$key] ?? '';
     }
 
 
